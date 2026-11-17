@@ -9,15 +9,15 @@ import argparse
 import sys
 from typing import Any
 
-from ._logo import LOGO, TAGLINE
+from ._logo import get_logo, get_tagline
 from .core import compress_prose, estimate_tokens, ponytail_ladder, review_code
 from .preview import write_preview
 from .state import StateManager
 
 
 def _print_logo() -> None:
-    print(LOGO)
-    print(TAGLINE)
+    print(get_logo())
+    print(get_tagline())
     print()
 
 
@@ -145,7 +145,7 @@ def cmd_ladder(args: argparse.Namespace) -> int:
 
 
 def cmd_logo(args: argparse.Namespace) -> int:
-    print(LOGO)
+    print(get_logo())
     return 0
 
 
