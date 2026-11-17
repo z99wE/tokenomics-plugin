@@ -21,6 +21,8 @@ const fs = require("fs");
  * Default options for the plugin.
  */
 const DEFAULTS = {
+  // Feature flag: enableCompression (see flags.json)
+  enableCompression: true,
   enabled: true,
   domain: "standard",
   autoLearn: true,

@@ -23,7 +23,7 @@ class StateManager:
     """Manages tokenomics state: enabled flag, cumulative stats, gamification,
     learned compression patterns, cross-agent sync with file locking."""
 
-    DEFAULT_STATE = {
+    DEFAULT_STATE = {  # noqa: RUF012
         "enabled": False,
         "total_original_chars": 0,
         "total_compressed_chars": 0,
@@ -60,7 +60,7 @@ class StateManager:
         os.makedirs(os.path.dirname(self.state_path), exist_ok=True)
 
     def _acquire_lock(self) -> Any:
-        f = open(self.lock_path, "w")
+        f = open(self.lock_path, "w")  # noqa: SIM115
         fcntl.flock(f, fcntl.LOCK_EX)
         return f
 
@@ -360,11 +360,10 @@ class StateManager:
                         ach["unlocked"] = True
                         ach["unlocked_at"] = time.time()
                         newly_unlocked.append(aid)
-                elif aid in ("streak_3", "streak_7"):
-                    if state.get("current_streak", 0) >= threshold:
-                        ach["unlocked"] = True
-                        ach["unlocked_at"] = time.time()
-                        newly_unlocked.append(aid)
+                elif aid in ("streak_3", "streak_7") and state.get("current_streak", 0) >= threshold:
+                    ach["unlocked"] = True
+                    ach["unlocked_at"] = time.time()
+                    newly_unlocked.append(aid)
 
         state["achievements"] = achs
         state["level"] = 1 + state.get("total_tokens_saved", 0) // 10000

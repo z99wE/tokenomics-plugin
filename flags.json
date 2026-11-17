@@ -1,0 +1,10 @@
+{
+  "$schema": "https://raw.githubusercontent.com/soch-ship-it/soloknuckle/main/flags-schema.json",
+  "flags": {
+    "enableCompression": {
+      "enabled": true,
+      "description": "Enable tokenomics compression pipeline"
+    }
+  },
+  "version": 1
+}

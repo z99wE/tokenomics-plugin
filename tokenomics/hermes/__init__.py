@@ -18,8 +18,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from tokenomics.core import (
     compress_prose,
     estimate_tokens,
-    review_code,
     get_preset,
+    review_code,
 )
 from tokenomics.preview import write_preview
 from tokenomics.state import StateManager
@@ -218,8 +218,6 @@ def _hook_pre_llm_call(**kwargs: Any) -> dict[str, Any]:
     state = STATE_MANAGER.load()
     if not state.get("enabled", False):
         return {"context": context}
-
-    domain = kwargs.get("domain", None)
 
     ponytail_note = (
         "\n[TOKENOMICS / PONYTAIL] Lazy-senior-dev mode active. "

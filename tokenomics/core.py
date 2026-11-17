@@ -49,7 +49,7 @@ try:
             return 0
         try:
             return len(_get_encoder(model).encode(text))
-        except Exception:
+        except Exception:  # noqa: BLE001
             return max(1, len(text) // 4)
 
 except ImportError:  # pragma: no cover - tiktoken optional
@@ -321,11 +321,10 @@ class Gamification:
                         ach.unlocked = True
                         ach.unlocked_at = time.time()
                         newly_unlocked.append(aid)
-                elif aid in ("streak_3", "streak_7"):
-                    if self.current_streak >= ach.threshold:
-                        ach.unlocked = True
-                        ach.unlocked_at = time.time()
-                        newly_unlocked.append(aid)
+                elif aid in ("streak_3", "streak_7") and self.current_streak >= ach.threshold:
+                    ach.unlocked = True
+                    ach.unlocked_at = time.time()
+                    newly_unlocked.append(aid)
         # Level up based on tokens saved
         self.level = 1 + self.total_tokens_saved // 10000
         return newly_unlocked

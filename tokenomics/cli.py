@@ -9,7 +9,7 @@ import argparse
 import sys
 from typing import Any
 
-from ._logo import logo_path, tagline, subtitle, description
+from ._logo import logo_path, tagline
 from .core import compress_prose, estimate_tokens, ponytail_ladder, review_code
 from .preview import write_preview
 from .state import StateManager

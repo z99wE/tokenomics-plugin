@@ -28,7 +28,8 @@
     "python": ">=3.9.0"
   },
   "scripts": {
-    "test": "python -m unittest tokenomics.tests.test_core tokenomics.tests.test_hermes tokenomics.tests.test_cli",
+    "test": "python3 -m unittest tokenomics.tests.test_core tokenomics.tests.test_hermes tokenomics.tests.test_cli",
+    "lint": "python3 -m ruff check .",
     "install:python": "pip install tokenomics",
     "start": "node apply.js"
   },

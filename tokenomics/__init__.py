@@ -21,8 +21,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from tokenomics.core import (
     compress_prose,
     estimate_tokens,
-    review_code,
     get_preset,
+    review_code,
 )
 from tokenomics.preview import write_preview
 from tokenomics.state import StateManager
