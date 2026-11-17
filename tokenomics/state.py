@@ -310,10 +310,10 @@ class StateManager:
         used_today = state["tokens_used_today"]
 
         alert = None
-        if budget and used_today >= budget * 0.8:
-            alert = f"⚠️ Token budget alert: {used_today}/{budget} used ({used_today/budget*100:.0f}%)"
-        elif budget and used_today >= budget:
+        if budget and used_today >= budget:
             alert = f"🛑 Token budget reached: {used_today}/{budget}"
+        elif budget and used_today >= budget * 0.8:
+            alert = f"⚠️ Token budget alert: {used_today}/{budget} used ({used_today/budget*100:.0f}%)"
 
         self.save(state)
         return {"budget": budget, "used_today": used_today, "saved_today": saved_today, "alert": alert}

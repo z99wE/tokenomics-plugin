@@ -344,7 +344,7 @@ class Gamification:
 SAFETY_PATTERNS = [
     r"auth|token|secret|password|credential|api_key|private_key",
     r"encrypt|decrypt|hash|hmac|sign|verify",
-    r"sql|query|insert|update|delete|drop|alter|create table",
+    r"sql|select|query|insert|update|delete|drop|alter|create table",
     r"os\.|subprocess|shutil|eval|exec|compile",
     r"admin|root|sudo|privilege|permission|access_control",
 ]
@@ -396,8 +396,8 @@ def ponytail_rewrite(code: str, safe: bool = True) -> dict[str, Any]:
 
     # 2. Replace verbose patterns
     replacements = [
-        (r"if\s+x\s+==\s+True\s*:", "if x:"),
-        (r"if\s+x\s+==\s+False\s*:", "if not x:"),
+        (r"if\s+(\w+)\s+==\s+True\s*:", r"if \1:"),
+        (r"if\s+(\w+)\s+==\s+False\s*:", r"if not \1:"),
         (r"for\s+i\s+in\s+range\s*\(len\s*\((.+)\)\s*\):", r"for item in \1:"),
         (r"\.append\s*\((.+)\)\s*if\s+(.+)\s*else\s*None", r".append(\1) if \2 else None"),
     ]
@@ -479,17 +479,17 @@ def review_code(code: str) -> dict[str, Any]:
 
     issues: list[str] = []
 
-    if len(code.split("\\n")) > 50:
+    if len(code.split("\n")) > 50:
         issues.append("File is over 50 lines — consider splitting or simplifying")
 
     if re.search(r"class.*Factory|class.*Manager|class.*Service|class.*Controller", code, re.IGNORECASE):
         issues.append("Possible unnecessary abstraction layer — consider simpler functions")
 
-    if re.search(r"import\*\s*from", code):
+    if re.search(r"import\s+\*|from\s+\S+\s+import\s+\*", code):
         issues.append("Wildcard import detected — consider explicit imports")
 
     max_indent = 0
-    for line in code.split("\\n"):
+    for line in code.split("\n"):
         indent = len(line) - len(line.lstrip())
         max_indent = max(max_indent, indent)
     if max_indent > 16:
@@ -607,18 +607,18 @@ _NEVER_COMPRESS_DEFAULT = {
 def _protect_code_blocks(text: str) -> tuple[str, list[str]]:
     """Extract code blocks so they aren't compressed."""
     blocks: list[str] = []
-    pattern = re.compile(r"```[\s\S]*?```|`[^`]+`")
+    pattern = re.compile(r"\`[^\`]+\`|```[\s\S]*?```")
 
     def repl(m: re.Match[str]) -> str:
         blocks.append(m.group(0))
-        return f"\n\x00CODE_BLOCK_{len(blocks) - 1}\x00\n"
+        return f"\x00CODE_BLOCK_{len(blocks) - 1}\x00"
 
     return pattern.sub(repl, text), blocks
 
 
 def _restore_code_blocks(text: str, blocks: list[str]) -> str:
     for i, block in enumerate(blocks):
-        text = text.replace(f"\n\x00CODE_BLOCK_{i}\x00\n", f"\n{block}\n")
+        text = text.replace(f"\x00CODE_BLOCK_{i}\x00", block)
     return text
 
 
