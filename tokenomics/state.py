@@ -241,9 +241,14 @@ class StateManager:
         state["domain_rules"] = rules
         self.save(state)
 
-    def get_domain_rules(self) -> dict[str, Any]:
+    def get_domain_rules(self) -> DomainRules:
         state = self.load()
-        return state.get("domain_rules", {"never_compress": [], "always_compress": [], "force_preset": {}})
+        rules = state.get("domain_rules", {"never_compress": [], "always_compress": [], "force_preset": {}})
+        return DomainRules(
+            never_compress=set(rules.get("never_compress", [])),
+            always_compress=set(rules.get("always_compress", [])),
+            force_preset=dict(rules.get("force_preset", {})),
+        )
 
     # ------------------------------------------------------------------
     # Domain presets
