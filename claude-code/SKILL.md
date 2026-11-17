@@ -3,7 +3,7 @@ name: tokenomics
 description: "Merged caveman + ponytail: compress agent prose, minimize code generation, track token savings. Works with Claude Code, Cursor, Antigravity, Codex, Hermes, and other SKILL.md-compatible agents."
 license: MIT
 metadata:
-  version: 0.2.0
+  version: 1.0.0
   derived_from: "https://github.com/z99wE/tokenomics"
   original_license: MIT
   components:

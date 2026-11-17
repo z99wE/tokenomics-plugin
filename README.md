@@ -11,7 +11,7 @@
                                    ███████║███████╗ ███████║██║     ███████║
                                    ╚══════╝╚══════╝ ╚══════╝╚═╝     ╚══════╝
 
-                              Tokenomics v0.2.0
+                              Tokenomics v1.0.0
                          Caveman + Ponytail = Maximum Efficiency
                          Compress prose. Minimize code. Save tokens.
 

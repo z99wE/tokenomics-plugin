@@ -11,6 +11,6 @@
                                    ███████║███████╗ ███████║██║     ███████║
                                    ╚══════╝╚══════╝ ╚══════╝╚═╝     ╚══════╝
 
-                              Tokenomics v0.2.0
-                         Caveman + Ponytail = Maximum Efficiency
-                         Compress prose. Minimize code. Save tokens.
+                              Tokenomics v1.0.0
+                         Enhanced Caveman + Ponytail Suite
+                   Real tokenizer • Domain presets • Auto-rewrite • Gamification

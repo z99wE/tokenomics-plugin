@@ -1,20 +1,27 @@
-"""Hermes plugin entry point for Tokenomics.
+"""Hermes plugin entry point for Tokenomics v1.0.0.
 
 Registers tools and hooks for caveman prose compression, ponytail code
-minimization, and token-savings estimation with preview-pane widget.
+minimization, token-savings estimation, gamification, learned compression,
+selective domain rules, and subagent propagation.
 """
 
 from __future__ import annotations
 
 import sys
+import os
 from typing import Any
 
-sys.path.insert(0, __import__("os").path.dirname(__import__("os").path.abspath(__file__)))
+# Make the tokenomics package importable
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# Add parent to path so we can import the tokenomics package
-sys.path.insert(0, __import__("os").path.join(__import__("os").path.dirname(__import__("os").path.abspath(__file__)), ".."))
-
-from tokenomics.core import compress_prose, estimate_tokens, ponytail_ladder, review_code
+from tokenomics.core import (
+    compress_prose,
+    estimate_tokens,
+    ponytail_ladder,
+    review_code,
+    get_preset,
+    DomainPreset,
+)
 from tokenomics.state import StateManager
 from tokenomics.preview import write_preview
 
@@ -55,17 +62,17 @@ def _handle_status(args: dict[str, Any]) -> dict[str, Any]:
 
 def _handle_estimate(args: dict[str, Any]) -> dict[str, Any]:
     text = str(args.get("text", ""))
-    original_tokens = estimate_tokens(text)
+    orig = estimate_tokens(text)
     compressed = compress_prose(text)
-    compressed_tokens = estimate_tokens(compressed)
-    saved = original_tokens - compressed_tokens
+    comp_tok = estimate_tokens(compressed)
+    saved = orig - comp_tok
     return {
         "ok": True,
         "data": {
-            "original_tokens": original_tokens,
-            "compressed_tokens": compressed_tokens,
+            "original_tokens": orig,
+            "compressed_tokens": comp_tok,
             "estimated_saved": max(0, saved),
-            "compression_ratio": round(compressed_tokens / original_tokens, 2) if original_tokens else 1.0,
+            "compression_ratio": round(comp_tok / orig, 2) if orig else 1.0,
             "preview": compressed[:200],
         },
     }
@@ -96,14 +103,44 @@ def _handle_audit(args: dict[str, Any]) -> dict[str, Any]:
             "saved_chars": saved_chars,
             "estimated_tokens_saved": saved_tokens,
             "compression_ratio": round(ratio, 2),
+            "level": status["level"],
+            "xp": status["xp"],
+            "current_streak": status["current_streak"],
+            "achievements_unlocked": status["achievements_unlocked"],
             "preview_path": "~/.hermes/plugins/tokenomics/preview.html",
             "recommendations": [
-                "Run tokenomics.review on large diffs before merging",
                 "Enable tokenomics at session start for maximum savings",
+                "Run tokenomics.review on large diffs before merging",
                 "Preview widget at ~/.hermes/plugins/tokenomics/preview.html",
+                "Use tokenomics.domain to set selective compression rules",
             ],
         },
     }
+
+
+def _handle_domain(args: dict[str, Any]) -> dict[str, Any]:
+    action = str(args.get("action", ""))
+    domain = str(args.get("domain", ""))
+    preset = str(args.get("preset", ""))
+    sm = STATE_MANAGER
+
+    if action == "never":
+        sm.set_domain_rule(domain, "never_compress", True)
+        return {"ok": True, "data": {"message": f"{domain} added to never-compress list"}}
+    elif action == "always":
+        sm.set_domain_rule(domain, "always_compress", True)
+        return {"ok": True, "data": {"message": f"{domain} added to always-compress list"}}
+    elif action == "preset":
+        sm.set_domain_preset(domain, preset)
+        return {"ok": True, "data": {"message": f"{domain} → preset {preset}"}}
+    elif action == "list":
+        return {"ok": True, "data": sm.get_domain_rules()}
+    return {"ok": False, "error": f"unknown domain action: {action}"}
+
+
+def _handle_achievements(args: dict[str, Any]) -> dict[str, Any]:
+    newly = STATE_MANAGER.check_achievements()
+    return {"ok": True, "data": {"newly_unlocked": newly}}
 
 
 def _run_tool(name: str, args: dict[str, Any]) -> dict[str, Any]:
@@ -114,6 +151,8 @@ def _run_tool(name: str, args: dict[str, Any]) -> dict[str, Any]:
         "tokenomics.estimate": _handle_estimate,
         "tokenomics.review": _handle_review,
         "tokenomics.audit": _handle_audit,
+        "tokenomics.domain": _handle_domain,
+        "tokenomics.achievements": _handle_achievements,
     }
     if name in handlers:
         return handlers[name](args)
@@ -125,14 +164,19 @@ def _run_tool(name: str, args: dict[str, Any]) -> dict[str, Any]:
 # ---------------------------------------------------------------------------
 
 def _hook_pre_llm_call(**kwargs: Any) -> dict[str, Any]:
+    """Inject ponytail YAGNI guidance into the LLM context before code generation."""
     context = kwargs.get("context", "")
     state = STATE_MANAGER.load()
     if not state.get("enabled", False):
         return {"context": context}
 
+    domain = kwargs.get("domain", None)
+    preset_name = STATE_MANAGER.get_domain_preset(domain) if domain else None
+    preset = get_preset(preset_name) if preset_name else None
+
     ponytail_note = (
-        "\n[TOKENOMICS / PONYTAIL] Lazy-senior-dev mode active. Before writing any code, "
-        "climb the ladder and stop at the first rung that holds:\n"
+        "\n[TOKENOMICS / PONYTAIL] Lazy-senior-dev mode active. "
+        "Before writing any code, climb the ladder and stop at the first rung that holds:\n"
         "1. Does this need to exist? (YAGNI — skip it)\n"
         "2. Already in this codebase? (reuse it)\n"
         "3. Stdlib does it? (use it)\n"
@@ -146,6 +190,7 @@ def _hook_pre_llm_call(**kwargs: Any) -> dict[str, Any]:
 
 
 def _hook_pre_tool_call(**kwargs: Any) -> dict[str, Any]:
+    """Compress string arguments before tool execution when enabled."""
     state = STATE_MANAGER.load()
     if not state.get("enabled", False):
         return kwargs
@@ -153,10 +198,19 @@ def _hook_pre_tool_call(**kwargs: Any) -> dict[str, Any]:
     tool_name = kwargs.get("tool_name", "")
     args = kwargs.get("args", {}) or {}
 
+    domain = tool_name.split(".")[0] if "." in tool_name else tool_name
+    preset_name = STATE_MANAGER.get_domain_preset(domain)
+    preset = get_preset(preset_name) if preset_name else None
+
+    # Check selective domain rules
+    rules = STATE_MANAGER.get_domain_rules()
+    if domain in rules.get("never_compress", []):
+        return kwargs
+
     compressed_args = {}
     for key, value in args.items():
         if isinstance(value, str):
-            compressed_args[key] = compress_prose(value)
+            compressed_args[key] = compress_prose(value, preset=preset, domain=domain)
         else:
             compressed_args[key] = value
 
@@ -167,41 +221,46 @@ def _hook_pre_tool_call(**kwargs: Any) -> dict[str, Any]:
 
 
 def _hook_post_tool_call(**kwargs: Any) -> dict[str, Any]:
+    """Compress tool result output and track savings."""
     state = STATE_MANAGER.load()
     if not state.get("enabled", False):
         return kwargs
 
     result = kwargs.get("result", {})
-    if isinstance(result, dict) and "data" in result and isinstance(result["data"], dict):
-        data = result["data"]
-        turn_original = 0
-        turn_compressed = 0
+    if not isinstance(result, dict) or "data" not in result or not isinstance(result["data"], dict):
+        return kwargs
 
-        for key in ("message", "text", "content", "output", "stdout", "stderr", "description"):
-            if key in data and isinstance(data[key], str):
-                original = data[key]
-                turn_original += len(original)
-                compressed = compress_prose(original)
-                turn_compressed += len(compressed)
-                if compressed != original:
-                    data[key] = compressed
+    data = result["data"]
+    turn_original = 0
+    turn_compressed = 0
 
-        if turn_original > 0:
-            STATE_MANAGER.record_turn(turn_original, turn_compressed)
-            write_preview(STATE_MANAGER.load())
-            result["data"] = data
-            kwargs["result"] = result
+    for key in ("message", "text", "content", "output", "stdout", "stderr", "description"):
+        if key in data and isinstance(data[key], str):
+            original = data[key]
+            turn_original += len(original)
+            compressed = compress_prose(original)
+            turn_compressed += len(compressed)
+            if compressed != original:
+                data[key] = compressed
+
+    if turn_original > 0:
+        STATE_MANAGER.record_turn(turn_original, turn_compressed)
+        write_preview(STATE_MANAGER.load())
+        result["data"] = data
+        kwargs["result"] = result
 
     return kwargs
 
 
 def _hook_on_session_start(**kwargs: Any) -> dict[str, Any]:
+    """Write preview widget on session start."""
     state = STATE_MANAGER.load()
     write_preview(state)
     return {"context": kwargs.get("context", "")}
 
 
 def _hook_on_session_end(**kwargs: Any) -> dict[str, Any]:
+    """Final state save on session end."""
     state = STATE_MANAGER.load()
     STATE_MANAGER.save(state)
     write_preview(state)
@@ -209,6 +268,7 @@ def _hook_on_session_end(**kwargs: Any) -> dict[str, Any]:
 
 
 def _hook_delegate_task(**kwargs: Any) -> dict[str, Any]:
+    """Propagate tokenomics state to delegate_task subagents."""
     state = STATE_MANAGER.load()
     if not state.get("enabled", False):
         return kwargs
@@ -260,7 +320,7 @@ def register(ctx):
         toolset="tokenomics",
         schema={"type": "object", "properties": {}, "required": []},
         handler=_run_tool,
-        description="Show Tokenomics status: enabled state, chars compressed, estimated tokens saved.",
+        description="Show Tokenomics status: enabled state, chars compressed, estimated tokens saved, level, streak, achievements.",
         emoji="📊",
     )
     ctx.register_tool(
@@ -302,8 +362,42 @@ def register(ctx):
         toolset="tokenomics",
         schema={"type": "object", "properties": {}, "required": []},
         handler=_run_tool,
-        description="Full tokenomics audit: savings summary, compression ratio, recommendations.",
+        description="Full tokenomics audit: savings summary, compression ratio, level, streak, achievements, recommendations.",
         emoji="📋",
+    )
+    ctx.register_tool(
+        name="tokenomics.domain",
+        toolset="tokenomics",
+        schema={
+            "type": "object",
+            "properties": {
+                "action": {
+                    "type": "string",
+                    "enum": ["never", "always", "preset", "list"],
+                    "description": "Domain rule action",
+                },
+                "domain": {
+                    "type": "string",
+                    "description": "Domain name (e.g., security, auth, crypto, docs)",
+                },
+                "preset": {
+                    "type": "string",
+                    "description": "Preset name for preset action (standard, docs, commit, review, chat, ultra)",
+                },
+            },
+            "required": ["action"],
+        },
+        handler=_run_tool,
+        description="Manage selective compression domain rules and presets.",
+        emoji="🎯",
+    )
+    ctx.register_tool(
+        name="tokenomics.achievements",
+        toolset="tokenomics",
+        schema={"type": "object", "properties": {}, "required": []},
+        handler=_run_tool,
+        description="Check for newly unlocked gamification achievements.",
+        emoji="🏆",
     )
 
     ctx.register_hook("pre_llm_call", _hook_pre_llm_call)
