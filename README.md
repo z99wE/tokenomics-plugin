@@ -11,12 +11,14 @@
                                    ███████║███████╗ ███████║██║     ███████║
                                    ╚══════╝╚══════╝ ╚══════╝╚═╝     ╚══════╝
 
-                              Tokenomics v1.0.0
-                         Caveman + Ponytail = Maximum Efficiency
+                              Tokenomics v2.3.0
+                       Agentic Efficiency Layer for AI Agents
+              Inspired by caveman and ponytail — engineered independently
                          Compress prose. Minimize code. Save tokens.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.9+](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://python.org)
+[![Tests: 135 passing](https://img.shields.io/badge/Tests-135%20passing-brightgreen.svg)](https://github.com/z99wE/tokenomics)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-supported-green.svg)](https://claude.ai/code)
 [![Cursor](https://img.shields.io/badge/Cursor-supported-green.svg)](https://cursor.sh)
 [![Antigravity](https://img.shields.io/badge/Antigravity-supported-green.svg)](https://antigravity.sh)
@@ -27,20 +29,30 @@
 
 # Tokenomics
 
-**Cross-platform agent efficiency toolkit.** Merge [caveman](https://github.com/JuliusBrussee/caveman) (prose compression) + [ponytail](https://github.com/DietrichGebert/ponytail) (code minimization) into one skill/plugin that works with Claude Code, Cursor, Antigravity, Codex, Hermes, and every SKILL.md-compatible agent.
+**Tokenomics is an agentic efficiency layer** that sits between your AI agent and its output. It compresses agent prose, minimizes code generation, tracks token savings, and learns from your behavior — all while keeping safety and authorization at the forefront.
+
+Tokenomics is **inspired by** the concepts behind [caveman](https://github.com/JuliusBrussee/caveman) (prose compression) and [ponytail](https://github.com/DietrichGebert/ponytail) (code minimization), but it is **engineered independently** as its own system with context awareness, learned compression, gamification, subagent propagation, token budgeting, and cross-agent memory.
 
 ---
 
-## What It Does
+## What Makes Tokenomics Different
 
-Tokenomics attacks token waste from two directions:
+| Capability | Caveman | Ponytail | Tokenomics v2.3 |
+|------------|---------|----------|-----------------|
+| Compresses prose | ✅ | ❌ | ✅ |
+| Minimizes code | ❌ | ✅ | ✅ |
+| Context-aware (code vs docs vs secrets) | ❌ | ❌ | **✅** |
+| Learned compression (adapts to your reverts) | ❌ | ❌ | **✅** |
+| Selective domain rules | ❌ | ❌ | **✅** |
+| Token budget with 80%/100% alerts | ❌ | ❌ | **✅** |
+| Project-type smart defaults | ❌ | ❌ | **✅** |
+| Gamification (levels, XP, streaks) | ❌ | ❌ | **✅** |
+| Subagent propagation | ❌ | ❌ | **✅** |
+| Preview widget | ❌ | ❌ | **✅** |
+| No injection hook | N/A | N/A | **✅** |
+| 135 test cases | ❌ | ❌ | **✅** |
 
-| Layer | What it compresses | Typical savings |
-|-------|-------------------|-----------------|
-| **Caveman** | Agent's **prose output** — drops articles, filler, pleasantries, hedging | ~65% fewer output words |
-| **Ponytail** | Agent's **code output** — YAGNI decision ladder before any code | ~54% less code (LOC) |
-
-They don't overlap. Caveman leaves code byte-for-byte exact. Ponytail stays out of the prose. Use them together for compound savings.
+Tokenomics is not a wrapper around either tool. It is a **separate engineering project** that draws inspiration from their concepts and builds its own architecture on top.
 
 ---
 
@@ -50,29 +62,38 @@ They don't overlap. Caveman leaves code byte-for-byte exact. Ponytail stays out 
 flowchart TD
     A[User Request] --> B{Tokenomics<br/>Enabled?}
     B -->|No| C[Normal Output<br/>No Compression<br/>Full Tokens]
-    B -->|Yes| D[Caveman Compression<br/>Drop filler, articles,<br/>pleasantries, hedging]
-    D --> E[Ponytail Ladder<br/>YAGNI → Stdlib → Native<br/>→ Dep → One line → Minimum]
-    E --> F[Token Savings Estimation<br/>~4 chars = 1 token]
-    F --> G[Preview Widget<br/>Live status dashboard]
-    F --> H[Subagent Propagation<br/>delegate_task context]
-    G --> I[Output with<br/>Savings Footer]
-    H --> I
-    style A fill:#e1f5e1,stroke:#333,stroke-width:2px
-    style B fill:#fff3e0,stroke:#333,stroke-width:2px
-    style D fill:#e8f5e9,stroke:#333,stroke-width:2px
-    style E fill:#e8f5e9,stroke:#333,stroke-width:2px
-    style F fill:#e3f2fd,stroke:#333,stroke-width:2px
-    style G fill:#f3e5f5,stroke:#333,stroke-width:2px
-    style H fill:#f3e5f5,stroke:#333,stroke-width:2px
-    style I fill:#c8e6c9,stroke:#333,stroke-width:2px
-    style C fill:#efefef,stroke:#333,stroke-width:2px
+    B -->|Yes| D[Context Detection<br/>Code / Docs / Config / Secrets / SQL / Prose]
+    D -->|Security Sensitive| E[Skip Compression<br/>Safety First]
+    D -->|Safe to Compress| F[Selective Domain Rules<br/>Never / Always / Force Preset]
+    F --> G[Learned Compression<br/>Adapts to Your Revert Patterns]
+    G --> H[Caveman-Inspired Prose Compression<br/>Drop Filler / Articles / Hedging]
+    H --> I[Ponytail-Inspired Code Minimization<br/>YAGNI Decision Ladder]
+    I --> J[Token Savings Estimation<br/>Real tiktoken Counting]
+    J --> K[Token Budget Check<br/>80% / 100% Alerts]
+    K --> L[Gamification<br/>XP / Level / Streak / Achievements]
+    L --> M[Preview Widget<br/>Live Status Dashboard]
+    M --> N[Subagent Propagation<br/>delegate_task Context]
+    N --> O[Output with Savings Footer]
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style B fill:#bbf,stroke:#333,stroke-width:2px
+    style D fill:#fbf,stroke:#333,stroke-width:2px
+    style E fill:#f96,stroke:#333,stroke-width:2px
+    style F fill:#fbf,stroke:#333,stroke-width:2px
+    style G fill:#fbf,stroke:#333,stroke-width:2px
+    style H fill:#bfb,stroke:#333,stroke-width:2px
+    style I fill:#bfb,stroke:#333,stroke-width:2px
+    style J fill:#fbf,stroke:#333,stroke-width:2px
+    style K fill:#ffd700,stroke:#333,stroke-width:2px
+    style L fill:#ffd700,stroke:#333,stroke-width:2px
+    style M fill:#ffb,stroke:#333,stroke-width:2px
+    style N fill:#fbf,stroke:#333,stroke-width:2px
+    style O fill:#9f9,stroke:#333,stroke-width:2px
+    style C fill:#ddd,stroke:#333,stroke-width:2px
 ```
 
 ---
 
-## Ponytail Decision Ladder
-
-Before writing any code, the agent climbs this ladder and stops at the first rung that holds:
+## Ponytail-Inspired Decision Ladder
 
 ```mermaid
 graph LR
@@ -95,53 +116,166 @@ graph LR
 
 ## Subagent Propagation
 
-When `delegate_task` spawns a subagent, tokenomics context is automatically applied:
-
 ```mermaid
 sequenceDiagram
     participant U as User
     participant A as Agent
     participant S as Subagent
     U->>A: delegate_task with task
-    Note over A: Tokenomics hook applies<br/>context + caveman context
+    Note over A: Tokenomics hook applies<br/>context + decision guidance
     A->>S: task with tokenomics rules
-    S->>S: Compresses prose<br/>Applies YAGNI ladder
+    S->>S: Compresses prose<br/>Applies YAGNI ladder<br/>Reports savings
     S->>A: Compressed output + savings footer
     A->>U: Aggregated result
 ```
 
 ---
 
-## Triggers
+## Context-Aware Compression
 
-Say any of these in chat:
+Tokenomics doesn't blindly compress everything. It first **detects what kind of content** it's looking at:
 
-| Trigger | Effect |
-|---------|--------|
-| `tokenomics enable` | Activate compression + savings display |
-| `tokenomics disable` | Deactivate — no compression, no footer |
-| `tokenomics status` | View cumulative savings |
-| `tokenomics estimate <text>` | Preview savings for specific text |
-| `tokenomics review <code>` | Ponytail over-engineering review |
-| `tokenomics audit` | Full savings summary + recommendations |
-| `caveman mode` | Activate prose compression |
-| `ponytail mode` | Activate code minimization |
-| `less tokens` / `minimal code` | Activate both |
-| `stop caveman` / `normal mode` | Deactivate |
+| Content Type | Strategy | Example |
+|-------------|----------|---------|
+| **Code** | Minimal — preserve structure, imports, comments | Only remove truly redundant patterns |
+| **Docs** | Moderate — keep structure, cut filler | Remove "basically", "actually", etc. |
+| **Commits** | Aggressive — conventional commit style | "Fix bug" not "Fix the bug in the login function" |
+| **Secrets / Auth** | **Never compress** | API keys, passwords, tokens left untouched |
+| **SQL** | Light — preserve query structure | Remove whitespace, keep semantics |
+| **Prose** | Standard — drop articles, filler, hedging | Remove "just", "really", "basically" |
+
+Security-sensitive content (API keys, passwords, crypto keys) is **never** compressed or modified.
+
+---
+
+## Core Features
+
+### Caveman-Inspired Prose Compression
+Drops articles (a/an/the), filler words (just/really/basically), pleasantries (sure/certainly), and hedging (maybe/I think). Keeps code blocks, technical terms, API names, and error strings exact.
+
+### Ponytail-Inspired Code Minimization
+Before writing code, climbs the YAGNI ladder:
+1. Does this need to exist? → Skip it
+2. Already in codebase? → Reuse it
+3. Stdlib does it? → Use it
+4. Native platform feature? → Use it
+5. Installed dependency? → Use it
+6. Can it be one line? → Write one line
+7. Only then: minimum code that works
+
+### Token Savings Estimation
+Real token counting via tiktoken (cl100k_base) with character-count fallback. Every compressed output shows estimated tokens saved.
+
+### Token Budget with Alerts
+Set a daily token budget and get notified at 80% and 100% usage:
+```bash
+tokenomics budget set 5000      # Set daily limit
+tokenomics budget record 4200   # Record tokens used
+# ⚠️ Token budget alert: 4200/5000 used (84%)
+```
+
+### Gamification
+Levels, XP, streaks, and achievements (First Savings, Token Hoarder, Token Miser, Lazy Senior Dev, YAGNI Master, Three-Day Streak, Week Warrior) give you feedback on your token efficiency.
+
+### Selective Domain Compression
+Never compress security/auth/crypto content. Always compress docs/changelog. Force specific presets per domain. Learned compression adapts based on what you revert vs accept.
+
+### Auto-Learn
+Tokenomics tracks which compression patterns you revert vs accept, and automatically adapts future compression decisions.
+
+### Project-Type Smart Defaults
+Set your project type (web/cli/library/api) for smart default domain rules.
+
+---
+
+## Subagent Propagation
+
+When you delegate a task to a subagent, Tokenomics context is automatically applied — the compression rules, learned patterns, and safety guidelines all carry over.
+
+---
+
+## Hermes Plugin: 11 Tools, 5 Hooks
+
+**Tools:**
+| Tool | What it does |
+|------|-----------|
+| `tokenomics.enable` | Activate compression + savings display |
+| `tokenomics.disable` | Deactivate — no compression, no footer |
+| `tokenomics.status` | Cumulative savings, level, streak, achievements |
+| `tokenomics.estimate` | Preview savings for specific text |
+| `tokenomics.review` | Ponytail-inspired over-engineering review |
+| `tokenomics.audit` | Full audit with recommendations |
+| `tokenomics.domain` | Manage selective compression rules |
+| `tokenomics.achievements` | Check newly unlocked achievements |
+| `tokenomics.budget` | Daily token budget + 80%/100% alerts |
+| `tokenomics.project` | Project type for smart defaults |
+| `tokenomics.learn` | Auto-learn from user revert patterns |
+
+**Hooks:**
+| Hook | What it does |
+|------|-----------|
+| `pre_tool_call` | Compresses string arguments before tool execution |
+| `post_tool_call` | Compresses tool result output + tracks savings |
+| `on_session_start` | Writes preview widget |
+| `on_session_end` | Final state save + preview refresh |
+| `delegate_task` | Propagates tokenomics context to subagents |
+
+> **No injection hook.** The `pre_llm_call` hook was removed in v2.1.0. Tokenomics never prepends hidden instructions to your LLM prompts.
+
+---
+
+## CLI Reference
+
+```
+tokenomics <command> [options]
+
+Commands:
+  enable      Activate compression + savings display
+  disable     Deactivate — no compression, no footer
+  status      Show cumulative savings and compression ratio
+  estimate    Preview token savings for specific text
+  review      Ponytail-style over-engineering review of code
+  audit       Full audit: savings, ratio, recommendations
+  ladder      Show ponytail YAGNI decision ladder
+  logo        Show ASCII logo
+  domain      Manage selective compression rules
+  achievements Check for newly unlocked achievements
+  budget      Daily token budget + alerts
+  record      Record tokens consumed and check budget
+  project     Set project type for smart defaults
+  learn       Toggle auto-learn from user reverts
+  defaults    Toggle smart default suggestions
+```
+
+**Examples:**
+```bash
+tokenomics enable
+tokenomics estimate "This is a really simple test."
+tokenomics review --code "class UserFactoryManagerServiceController: ..."
+tokenomics budget set 5000
+tokenomics budget record 4200
+tokenomics project web
+tokenomics learn true
+tokenomics disable
+```
 
 ---
 
 ## Installation
 
 ### Option 1: pip (recommended)
-
 ```bash
 pip install tokenomics
 tokenomics enable
 ```
 
-### Option 2: From source
+### Option 2: With real tokenizer
+```bash
+pip install "tokenomics[tiktoken]"
+tokenomics enable
+```
 
+### Option 3: From source
 ```bash
 git clone https://github.com/z99wE/tokenomics.git
 cd tokenomics
@@ -149,8 +283,7 @@ pip install -e .
 tokenomics enable
 ```
 
-### Option 3: Manual skill copy
-
+### Option 4: Manual skill copy
 Copy `SKILL.md` to your agent's skills directory:
 
 | Platform | Path |
@@ -166,78 +299,19 @@ All platforms use the same open **SKILL.md** standard (agentskills.io).
 
 ---
 
-## Usage Examples
+## Testing
 
-### Enable tokenomics at session start
-
-```bash
-tokenomics enable
-```
-
-### Estimate savings for a block of text
+Tokenomics has **135 test cases** covering core compression, state management, Hermes plugin handlers/hooks, and CLI commands:
 
 ```bash
-tokenomics estimate "Sure! I can help you implement this feature. Basically you just need to create a function..."
-# Output:
-# Original:   24 tokens
-# Compressed: 18 tokens
-# Saved:      6 tokens (25% reduction)
+python -m unittest tokenomics.tests.test_core tokenomics.tests.test_hermes tokenomics.tests.test_cli -v
 ```
 
-### Ponytail code review
+All 135 tests pass. The project uses **ruff** for linting:
 
 ```bash
-tokenomics review --code "class UserFactoryManagerServiceController: ..."
-# Output:
-# Issues found:
-#   • Possible unnecessary abstraction layer — consider simpler functions
-#   • Deep nesting (6 levels) — consider extracting functions
-#   Token savings: 156 → 106 (saved 50 tokens)
+ruff check .
 ```
-
-### Full audit
-
-```bash
-tokenomics audit
-# Shows: enabled state, turns, chars compressed, tokens saved, compression ratio
-```
-
-### Preview widget
-
-Open `~/.hermes/plugins/tokenomics/preview.html` in any browser for a live status dashboard with auto-refresh.
-
----
-
-## CLI Reference
-
-```
-tokenomics <command> [options]
-
-Commands:
-  enable     Activate compression + savings display
-  disable    Deactivate — no compression, no footer
-  status     Show cumulative savings and compression ratio
-  estimate   Preview token savings for specific text
-  review     Ponytail-style over-engineering review of code
-  audit      Full audit: savings, ratio, recommendations
-  ladder     Show ponytail YAGNI decision ladder
-  logo       Show ASCII logo
-```
-
----
-
-## Platform Compatibility
-
-| Platform | Skill Path | Hermes Plugin |
-|----------|-----------|---------------|
-| Claude Code | `~/.claude/skills/` | N/A (skill only) |
-| Cursor | `~/.cursor/skills/` | N/A (skill only) |
-| Antigravity | `~/.antigravity/skills/` | N/A (skill only) |
-| Codex | `~/.agents/skills/` | N/A (skill only) |
-| OpenAI Codex | `~/.codex/skills/` | N/A (skill only) |
-| Hermes | `~/.hermes/skills/` | `~/.hermes/plugins/tokenomics/` |
-
-All platforms use the same open **SKILL.md** standard. The Hermes plugin adds tool-level enforcement (`tokenomics.enable`, `tokenomics.disable`, etc.) and hook-based behavior (`pre_llm_call`, `pre_tool_call`, `post_tool_call`, `delegate_task`).
 
 ---
 
@@ -247,9 +321,19 @@ MIT License. See [LICENSE](LICENSE) for details.
 
 ---
 
+## Inspiration & Attribution
+
+Tokenomics is **inspired by** the concepts behind:
+- **[caveman](https://github.com/JuliusBrussee/caveman)** — prose compression
+- **[ponytail](https://github.com/DietrichGebert/ponytail)** — code minimization
+
+Tokenomics is **engineered independently** as its own project. It reimplements these concepts with its own architecture, context detection, learned compression, gamification, token budgeting, and agentic features. All code in this repository is original work by the Tokenomics contributors.
+
+---
+
 ## Links
 
 - [GitHub Repository](https://github.com/z99wE/tokenomics)
-- [Caveman (JuliusBrussee)](https://github.com/JuliusBrussee/caveman)
-- [Ponytail (DietrichGebert)](https://github.com/DietrichGebert/ponytail)
+- [caveman](https://github.com/JuliusBrussee/caveman) — inspiration for prose compression
+- [ponytail](https://github.com/DietrichGebert/ponytail) — inspiration for code minimization
 - [Agent Skills Standard](https://agentskills.io)
