@@ -44,35 +44,52 @@ Tokenomics is not a wrapper around either tool. It is a **separate engineering p
 
 ```mermaid
 flowchart TD
-    A[User Request] --> B{Tokenomics<br/>Enabled?}
-    B -->|No| C[Normal Output<br/>No Compression<br/>Full Tokens]
-    B -->|Yes| D[Context Detection<br/>Code / Docs / Config / Secrets / SQL / Prose]
-    D -->|Security Sensitive| E[Skip Compression<br/>Safety First]
-    D -->|Safe to Compress| F[Selective Domain Rules<br/>Never / Always / Force Preset]
-    F --> G[Learned Compression<br/>Adapts to Your Revert Patterns]
-    G --> H[Caveman-Inspired Prose Compression<br/>Drop Filler / Articles / Hedging]
-    H --> I[Ponytail-Inspired Code Minimization<br/>YAGNI Decision Ladder]
-    I --> J[Token Savings Estimation<br/>Real tiktoken Counting]
-    J --> K[Token Budget Check<br/>80% / 100% Alerts]
-    K --> L[Gamification<br/>XP / Level / Streak / Achievements]
-    L --> M[Preview Widget<br/>Live Status Dashboard]
-    M --> N[Subagent Propagation<br/>delegate_task Context]
-    N --> O[Output with Savings Footer]
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style B fill:#bbf,stroke:#333,stroke-width:2px
-    style D fill:#fbf,stroke:#333,stroke-width:2px
-    style E fill:#f96,stroke:#333,stroke-width:2px
-    style F fill:#fbf,stroke:#333,stroke-width:2px
-    style G fill:#fbf,stroke:#333,stroke-width:2px
-    style H fill:#bfb,stroke:#333,stroke-width:2px
-    style I fill:#bfb,stroke:#333,stroke-width:2px
-    style J fill:#fbf,stroke:#333,stroke-width:2px
-    style K fill:#ffd700,stroke:#333,stroke-width:2px
-    style L fill:#ffd700,stroke:#333,stroke-width:2px
-    style M fill:#ffb,stroke:#333,stroke-width:2px
-    style N fill:#fbf,stroke:#333,stroke-width:2px
-    style O fill:#9f9,stroke:#333,stroke-width:2px
-    style C fill:#ddd,stroke:#333,stroke-width:2px
+    subgraph Start ["Start"]
+        A([User Request]) --> B{Tokenomics<br/>Enabled?}
+    end
+
+    subgraph Safety ["Safety Gate"]
+        D[Context<br/>Detection] --> E[Security<br/>Sensitive?]
+        E -->|Yes| F[Skip<br/>Compression]
+        E -->|No| G[Safe to<br/>Compress]
+    end
+
+    subgraph Compress ["Compression Pipeline"]
+        G --> H[Selective<br/>Domain Rules]
+        H --> I[Learned<br/>Compression]
+        I --> J[Prose<br/>Compression]
+        J --> K[Code<br/>Minimization]
+        K --> L[Token<br/>Savings]
+    end
+
+    subgraph Features ["Features"]
+        L --> M[Budget<br/>Check]
+        M --> N[Gamification<br/>XP / Streaks]
+        N --> O[Preview<br/>Widget]
+        O --> P[Subagent<br/>Propagation]
+    end
+
+    subgraph End ["End"]
+        P --> Q[Output with<br/>Savings Footer]
+    end
+
+    B -->|No| R[Normal<br/>Output]
+    B -->|Yes| D
+    F --> D
+
+    classDef start fill:#f9f,stroke:#333,stroke-width:2px
+    classDef safety fill:#bbf,stroke:#333,stroke-width:2px
+    classDef compress fill:#bfb,stroke:#333,stroke-width:2px
+    classDef features fill:#ffd700,stroke:#333,stroke-width:2px
+    classDef end fill:#9f9,stroke:#333,stroke-width:2px
+    classDef skip fill:#f96,stroke:#333,stroke-width:2px
+
+    class A,B start
+    class D,E,F safety
+    class H,I,J,K,L compress
+    class M,N,O,P features
+    class Q end
+    class F skip
 ```
 
 ---
@@ -81,12 +98,15 @@ flowchart TD
 
 ```mermaid
 graph LR
-    1[1. Does this need to exist?<br/>YAGNI — skip it] --> 2[2. Already in codebase?<br/>Reuse it]
-    2 --> 3[3. Stdlib does it?<br/>Use it]
-    3 --> 4[4. Native platform feature?<br/>Use it]
-    4 --> 5[5. Installed dependency?<br/>Use it]
-    5 --> 6[6. Can it be one line?<br/>Write one line]
-    6 --> 7[7. Minimum code that works]
+    subgraph YAGNI ["YAGNI Ladder"]
+        1[1. Need<br/>it?] --> 2[2. In<br/>codebase?]
+        2 --> 3[3. Stdlib?]
+        3 --> 4[4. Native?]
+        4 --> 5[5. Dep?]
+        5 --> 6[6. One<br/>line?]
+        6 --> 7[7. Min<br/>code]
+    end
+
     style 1 fill:#ffcccc,stroke:#333,stroke-width:2px
     style 2 fill:#ffcccc,stroke:#333,stroke-width:2px
     style 3 fill:#ffcccc,stroke:#333,stroke-width:2px
@@ -105,11 +125,14 @@ sequenceDiagram
     participant U as User
     participant A as Agent
     participant S as Subagent
-    U->>A: delegate_task with task
-    Note over A: Tokenomics hook applies<br/>context + decision guidance
-    A->>S: task with tokenomics rules
+
+    autonumber
+
+    U->>A: delegate_task<br/>with task
+    Note over A: Tokenomics applies<br/>context + decision guidance
+    A->>S: task with tokenomics<br/>rules applied
     S->>S: Compresses prose<br/>Applies YAGNI ladder<br/>Reports savings
-    S->>A: Compressed output + savings footer
+    S->>A: Compressed output<br/>+ savings footer
     A->>U: Aggregated result
 ```
 
