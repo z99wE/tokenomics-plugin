@@ -69,7 +69,7 @@ flowchart TD
         O --> P[Subagent<br/>Propagation]
     end
 
-    subgraph End ["End"]
+    subgraph Final ["End"]
         P --> Q[Output with<br/>Savings Footer]
     end
 
@@ -81,14 +81,14 @@ flowchart TD
     classDef safety fill:#bbf,stroke:#333,stroke-width:2px
     classDef compress fill:#bfb,stroke:#333,stroke-width:2px
     classDef features fill:#ffd700,stroke:#333,stroke-width:2px
-    classDef end fill:#9f9,stroke:#333,stroke-width:2px
+    classDef completed fill:#9f9,stroke:#333,stroke-width:2px
     classDef skip fill:#f96,stroke:#333,stroke-width:2px
 
     class A,B start
     class D,E,F safety
     class H,I,J,K,L compress
     class M,N,O,P features
-    class Q end
+    class Q completed
     class F skip
 ```
 
