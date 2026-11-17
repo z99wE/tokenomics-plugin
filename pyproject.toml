@@ -25,7 +25,7 @@ classifiers = [
 ]
 
 [project.optional-dependencies]
-tiktoken = ["tiktoken>=0.5.0"]
+tiktoken = ["tiktoken>=0.14.0"]
 
 [project.scripts]
 tokenomics = "tokenomics.cli:main"
