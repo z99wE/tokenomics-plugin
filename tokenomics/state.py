@@ -268,7 +268,6 @@ class StateManager:
 
     def check_achievements(self) -> list[str]:
         state = self.load()
-        gam = state.get("gamification", {})
         newly_unlocked: list[str] = []
 
         achs = state.get("achievements", {})
@@ -282,18 +281,18 @@ class StateManager:
                     "lazy_senior",
                     "yagni_master",
                 ):
-                    if gam.get("total_tokens_saved", 0) >= threshold:
+                    if state.get("total_tokens_saved", 0) >= threshold:
                         ach["unlocked"] = True
                         ach["unlocked_at"] = time.time()
                         newly_unlocked.append(aid)
                 elif aid in ("streak_3", "streak_7"):
-                    if gam.get("current_streak", 0) >= threshold:
+                    if state.get("current_streak", 0) >= threshold:
                         ach["unlocked"] = True
                         ach["unlocked_at"] = time.time()
                         newly_unlocked.append(aid)
 
         state["achievements"] = achs
-        state["gamification"]["level"] = 1 + gam.get("total_tokens_saved", 0) // 10000
+        state["level"] = 1 + state.get("total_tokens_saved", 0) // 10000
         self.save(state)
         return newly_unlocked
 
