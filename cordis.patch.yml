@@ -1,0 +1,3 @@
+- insert:
+    - id: tokenomics
+      name: "@soch-tokenomics/tokenomics-dsh-plugin"

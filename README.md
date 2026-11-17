@@ -377,7 +377,7 @@ After installing, your AI agent's prose is compressed, code is minimized via the
 | **Category** | Tools & Capabilities |
 | **Profile** | web |
 | **Entry Point** | `apply.js` (exports `apply(ctx)`) |
-| **Package** | `tokenomics-dsh-plugin` |
+| **Package** | `@soch-tokenomics/tokenomics-dsh-plugin` |
 
 ### Trust Signals
 
@@ -394,7 +394,7 @@ After installing, your AI agent's prose is compressed, code is minimized via the
 ### Install Command
 
 ```bash
-dsh plugin --profile web add tokenomics-dsh-plugin
+dsh plugin --profile web add @soch-tokenomics/tokenomics-dsh-plugin
 ```
 
 From source (no NPM required):
@@ -451,7 +451,7 @@ After installing, your AI agent's prose is compressed, code is minimized via the
 Tools & Capabilities
 
 ### Install command
-dsh plugin --profile web add tokenomics-dsh-plugin
+dsh plugin --profile web add @soch-tokenomics/tokenomics-dsh-plugin
 
 ### Compatibility
 DeepSeek Harness `web` profile; Node ≥ 18; Python ≥ 3.9; Hermes ≥ 0.22 (optional)

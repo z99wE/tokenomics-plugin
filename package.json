@@ -1,9 +1,26 @@
 {
-  "name": "tokenomics-dsh-plugin",
-  "version": "2.3.0",
+  "name": "@soch-tokenomics/tokenomics-dsh-plugin",
+  "version": "2.4.0",
   "description": "Tokenomics agentic-efficiency suite: compress agent prose, minimize code generation, track token savings, token budget, gamification, subagent propagation. Inspired by caveman and ponytail, engineered independently.",
-  "main": "apply.js",
-  "apply": "apply.js",
+  "type": "module",
+  "main": "./index.mjs",
+  "exports": {
+    ".": "./index.mjs",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.mjs",
+    "cordis.patch.yml",
+    "apply.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
   "author": "Souvik Chakraborty <souvikchakraborty@souvik.local>",
   "license": "MIT",
   "repository": {
@@ -31,7 +48,7 @@
     "test": "python3 -m unittest tokenomics.tests.test_core tokenomics.tests.test_hermes tokenomics.tests.test_cli",
     "lint": "python3 -m ruff check .",
     "install:python": "pip install tokenomics",
-    "start": "node apply.js"
+    "start": "node index.mjs"
   },
   "dependencies": {},
   "devDependencies": {}
