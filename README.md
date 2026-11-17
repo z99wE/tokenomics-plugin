@@ -433,7 +433,7 @@ The HTML preview widget (`~/.hermes/plugins/tokenomics/preview.html`) shows live
 - [x] Plugin exports `apply(ctx)` module (`apply.js`)
 - [x] Repository root includes `package.json`
 - [x] Open-source license declared (MIT)
-- [ ] Publish to NPM (required for Plugin Hub listing)
+- [x] Publish to NPM (required for Plugin Hub listing)
 - [x] `dsh-plugin` topic added on GitHub
 
 ### Submission Template (copy into the hub's issue form)

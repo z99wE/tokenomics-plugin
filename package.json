@@ -6,8 +6,12 @@
   "main": "./index.mjs",
   "exports": {
     ".": "./index.mjs",
+    "./apply.js": "./apply.js",
     "./cordis.patch.yml": "./cordis.patch.yml",
     "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "files": [
     "index.mjs",
@@ -25,7 +29,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/z99wE/tokenomics-plugin.git"
+    "url": "git+https://github.com/z99wE/tokenomics-plugin.git"
   },
   "keywords": [
     "dsh-plugin",
