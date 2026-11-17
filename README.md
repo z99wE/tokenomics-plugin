@@ -54,7 +54,7 @@ flowchart TD
     D --> E[Ponytail Ladder<br/>YAGNI → Stdlib → Native<br/>→ Dep → One line → Minimum]
     E --> F[Token Savings Estimation<br/>~4 chars = 1 token]
     F --> G[Preview Widget<br/>Live status dashboard]
-    F --> H[Subagent Propagation<br/>delegate_task injection]
+    F --> H[Subagent Propagation<br/>delegate_task context]
     G --> I[Output with<br/>Savings Footer]
     H --> I
     style A fill:#e1f5e1,stroke:#333,stroke-width:2px
@@ -95,7 +95,7 @@ graph LR
 
 ## Subagent Propagation
 
-When `delegate_task` spawns a subagent, tokenomics context is automatically injected:
+When `delegate_task` spawns a subagent, tokenomics context is automatically applied:
 
 ```mermaid
 sequenceDiagram
@@ -103,7 +103,7 @@ sequenceDiagram
     participant A as Agent
     participant S as Subagent
     U->>A: delegate_task with task
-    Note over A: Tokenomics hook injects<br/>ponytail + caveman context
+    Note over A: Tokenomics hook applies<br/>context + caveman context
     A->>S: task with tokenomics rules
     S->>S: Compresses prose<br/>Applies YAGNI ladder
     S->>A: Compressed output + savings footer
@@ -237,7 +237,7 @@ Commands:
 | OpenAI Codex | `~/.codex/skills/` | N/A (skill only) |
 | Hermes | `~/.hermes/skills/` | `~/.hermes/plugins/tokenomics/` |
 
-All platforms use the same open **SKILL.md** standard. The Hermes plugin adds tool-level enforcement (`tokenomics.enable`, `tokenomics.disable`, etc.) and hook injection (`pre_llm_call`, `pre_tool_call`, `post_tool_call`, `delegate_task`).
+All platforms use the same open **SKILL.md** standard. The Hermes plugin adds tool-level enforcement (`tokenomics.enable`, `tokenomics.disable`, etc.) and hook-based behavior (`pre_llm_call`, `pre_tool_call`, `post_tool_call`, `delegate_task`).
 
 ---
 

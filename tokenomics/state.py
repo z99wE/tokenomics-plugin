@@ -50,6 +50,14 @@ class StateManager:
             "force_preset": {},
         },
         "domain_presets": {},
+        # Enhanced features beyond caveman/ponytail
+        "daily_token_budget": None,
+        "tokens_used_today": 0,
+        "tokens_saved_today": 0,
+        "project_type": None,
+        "auto_learn": True,
+        "smart_defaults": True,
+        "budget_alerts_enabled": True,
     }
 
     def __init__(self, state_path: str | None = None):
@@ -266,6 +274,74 @@ class StateManager:
             return None
         state = self.load()
         return state.get("domain_presets", {}).get(domain)
+
+    # ------------------------------------------------------------------
+    # Enhanced features: token budget, project type, smart defaults
+    # ------------------------------------------------------------------
+
+    def set_token_budget(self, daily_limit: int) -> None:
+        """Set daily token budget. None = unlimited."""
+        state = self.load()
+        state["daily_token_budget"] = daily_limit
+        state["tokens_used_today"] = 0
+        state["tokens_saved_today"] = 0
+        self.save(state)
+
+    def get_token_budget(self) -> int | None:
+        state = self.load()
+        return state.get("daily_token_budget")
+
+    def record_tokens_used(self, count: int) -> dict:
+        """Record tokens consumed and check budget. Returns budget status."""
+        state = self.load()
+        today = datetime.now().strftime("%Y-%m-%d")
+        last_date = state.get("last_activity_date")
+
+        # Reset daily counters if new day
+        if last_date != today:
+            state["tokens_used_today"] = count
+            state["tokens_saved_today"] = 0
+        else:
+            state["tokens_used_today"] = state.get("tokens_used_today", 0) + count
+
+        state["last_activity_date"] = today
+        budget = state.get("daily_token_budget")
+        saved_today = state.get("tokens_saved_today", 0)
+        used_today = state["tokens_used_today"]
+
+        alert = None
+        if budget and used_today >= budget * 0.8:
+            alert = f"⚠️ Token budget alert: {used_today}/{budget} used ({used_today/budget*100:.0f}%)"
+        elif budget and used_today >= budget:
+            alert = f"🛑 Token budget reached: {used_today}/{budget}"
+
+        self.save(state)
+        return {"budget": budget, "used_today": used_today, "saved_today": saved_today, "alert": alert}
+
+    def set_project_type(self, project_type: str) -> None:
+        """Set project type for smart defaults: web, cli, library, api, or none."""
+        state = self.load()
+        state["project_type"] = project_type
+        self.save(state)
+
+    def get_project_type(self) -> str | None:
+        state = self.load()
+        return state.get("project_type")
+
+    def set_auto_learn(self, enabled: bool) -> None:
+        state = self.load()
+        state["auto_learn"] = enabled
+        self.save(state)
+
+    def set_smart_defaults(self, enabled: bool) -> None:
+        state = self.load()
+        state["smart_defaults"] = enabled
+        self.save(state)
+
+    def set_budget_alerts(self, enabled: bool) -> None:
+        state = self.load()
+        state["budget_alerts_enabled"] = enabled
+        self.save(state)
 
     # ------------------------------------------------------------------
     # Achievements / gamification

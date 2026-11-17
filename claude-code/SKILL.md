@@ -42,7 +42,7 @@ flowchart TD
     D --> E[Ponytail Ladder<br/>YAGNI → Stdlib → Native → Dep → One line → Minimum]
     E --> F[Token Savings Estimation<br/>~4 chars = 1 token]
     F --> G[Preview Widget<br/>Live status dashboard]
-    F --> H[Subagent Propagation<br/>delegate_task injection]
+    F --> H[Subagent Propagation<br/>delegate_task context]
     G --> I[Output with Savings Footer]
     H --> I
     style A fill:#f9f,stroke:#333,stroke-width:2px
@@ -130,7 +130,7 @@ When disabled: no compression, no footer, output unchanged.
 
 ## Subagent Propagation
 
-When `delegate_task` spawns a subagent, tokenomics context is automatically injected:
+When `delegate_task` spawns a subagent, tokenomics context is automatically applied:
 
 - Ponytail YAGNI ladder prepended to subagent task
 - Caveman compression rules applied to subagent output
@@ -142,7 +142,7 @@ sequenceDiagram
     participant Agent
     participant Subagent
     User->>Agent: delegate_task with task
-    Agent->>Agent: Tokenomics hook injects<br/>ponytail + caveman context
+    Agent->>Agent: Tokenomics hook applies<br/>context + caveman context
     Agent->>Subagent: task with tokenomics rules
     Subagent->>Subagent: Compresses prose<br/>Applies YAGNI ladder
     Subagent->>Agent: Compressed output + savings footer

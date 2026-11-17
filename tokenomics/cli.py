@@ -180,10 +180,57 @@ def cmd_achievements(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_budget(args: argparse.Namespace) -> None:
+    """Set or check daily token budget."""
+    sm = StateManager()
+    if args.budget_action == "set":
+        sm.set_token_budget(args.limit)
+        print(f"✓ Daily token budget set to {args.limit} tokens")
+    elif args.budget_action == "check":
+        budget = sm.get_token_budget()
+        if budget is None:
+            print("No daily token budget set.")
+        else:
+            print(f"Daily token budget: {budget} tokens")
+
+
+def cmd_record(args: argparse.Namespace) -> None:
+    """Record tokens consumed and check budget."""
+    sm = StateManager()
+    result = sm.record_tokens_used(args.tokens)
+    if result["alert"]:
+        print(result["alert"])
+    print(f"Used today: {result['used_today']} tokens")
+    if result["saved_today"]:
+        print(f"Saved today: {result['saved_today']} tokens")
+
+
+def cmd_project(args: argparse.Namespace) -> None:
+    """Set project type for smart defaults."""
+    sm = StateManager()
+    sm.set_project_type(args.type)
+    print(f"✓ Project type set to: {args.type}")
+    print("  Smart defaults will now suggest domain rules for this project type.")
+
+
+def cmd_learn(args: argparse.Namespace) -> None:
+    """Toggle auto-learn from user reverts."""
+    sm = StateManager()
+    sm.set_auto_learn(args.enable)
+    print(f"✓ Auto-learn {'enabled' if args.enable else 'disabled'}")
+
+
+def cmd_defaults(args: argparse.Namespace) -> None:
+    """Toggle smart default suggestions."""
+    sm = StateManager()
+    sm.set_smart_defaults(args.enable)
+    print(f"✓ Smart defaults {'enabled' if args.enable else 'disabled'}")
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="tokenomics",
-        description="Tokenomics v1.0.0: Caveman + Ponytail = Maximum Efficiency",
+        description="Tokenomics v2.0.0: Agentic Efficiency Layer — Beyond Caveman + Ponytail",
     )
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
 
@@ -207,6 +254,23 @@ def build_parser() -> argparse.ArgumentParser:
     p_domain.add_argument("domain_action", choices=["never", "always", "preset", "list"])
     p_domain.add_argument("domain_name", nargs="?", help="Domain name")
     p_domain.add_argument("--preset", dest="preset_name", help="Preset name for preset action")
+
+    # Enhanced features: budget, project type, smart defaults
+    p_budget = subparsers.add_parser("budget", help="Set or check daily token budget")
+    p_budget.add_argument("budget_action", choices=["set", "check"])
+    p_budget.add_argument("limit", nargs="?", type=int, help="Daily token limit")
+
+    p_record = subparsers.add_parser("record", help="Record tokens consumed and check budget")
+    p_record.add_argument("tokens", type=int, help="Token count to record")
+
+    p_project = subparsers.add_parser("project", help="Set project type for smart defaults")
+    p_project.add_argument("type", choices=["web", "cli", "library", "api", "none"])
+
+    p_learn = subparsers.add_parser("learn", help="Toggle auto-learn from user reverts")
+    p_learn.add_argument("enable", action="store_true")
+
+    p_defaults = subparsers.add_parser("defaults", help="Toggle smart default suggestions")
+    p_defaults.add_argument("enable", action="store_true")
 
     return parser
 
@@ -235,6 +299,11 @@ def main(argv: list[str] | None = None) -> int:
         "logo": cmd_logo,
         "domain": cmd_domain,
         "achievements": cmd_achievements,
+        "budget": cmd_budget,
+        "record": cmd_record,
+        "project": cmd_project,
+        "learn": cmd_learn,
+        "defaults": cmd_defaults,
     }
 
     return handlers[args.command](args)

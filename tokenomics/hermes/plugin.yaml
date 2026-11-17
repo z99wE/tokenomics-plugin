@@ -15,8 +15,10 @@ provides_tools:
   - tokenomics.audit
   - tokenomics.domain
   - tokenomics.achievements
+  - tokenomics.budget
+  - tokenomics.project
+  - tokenomics.learn
 provides_hooks:
-  - pre_llm_call
   - pre_tool_call
   - post_tool_call
   - on_session_start

@@ -106,7 +106,7 @@ This means Tokenomics gets *better the more you use it*, personalized to your wr
 
 ### 3. Agentic-Era Features
 
-**Cross-agent memory:** When you delegate a task to a subagent, Tokenomics context is injected. The subagent inherits your compression preferences, learned patterns, and safety rules.
+**Cross-agent memory:** When you delegate a task to a subagent, Tokenomics context is applied. The subagent inherits your compression preferences, learned patterns, and safety rules.
 
 **Safety-first by default:** Secrets, auth tokens, crypto keys, PII — never compressed, never modified. The safety gate is checked *before* any compression happens.
 
@@ -284,7 +284,7 @@ After compression, Tokenomics coaches:
 | OpenAI Codex | `~/.codex/skills/tokenomics/SKILL.md` | N/A |
 | Hermes | `~/.hermes/skills/tokenomics/SKILL.md` | `~/.hermes/plugins/tokenomics/` |
 
-All platforms use the same open **SKILL.md** standard (agentskills.io). The Hermes plugin adds tool-level enforcement (`tokenomics.enable`, `tokenomics.disable`, etc.) and hook injection (`pre_llm_call`, `pre_tool_call`, `post_tool_call`, `delegate_task`).
+All platforms use the same open **SKILL.md** standard (agentskills.io). The Hermes plugin adds tool-level enforcement (`tokenomics.enable`, `tokenomics.disable`, etc.) and hook-based behavior (`pre_llm_call`, `pre_tool_call`, `post_tool_call`, `delegate_task`).
 
 ---
 
@@ -296,7 +296,7 @@ MIT License. See [LICENSE](LICENSE) for details.
 
 ## What This Is NOT
 
-- **Not a prompt injection tool** — Tokenomics never injects hidden instructions into LLM context. It only compresses *output* text and injects *visible* ponytail guidance that the user can see and reject.
+- **Not a prompt injection tool** — Tokenomics never adds hidden instructions to LLM context. It only compresses *output* text and applies *visible* decision guidance that the user can see and reject.
 - **Not a safety bypass** — Tokenomics adds safety gates (never compress secrets/auth/crypto), it never removes them.
 - **Not a replacement for human judgment** — Compression is always advisory. The user sees the original and compressed output and can choose either.
 - **Not cloud-based** — All processing is local. No data leaves your machine.

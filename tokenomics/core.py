@@ -301,6 +301,14 @@ class Gamification:
     level: int = 1
     xp: int = 0
 
+    # Enhanced features beyond caveman/ponytail
+    daily_token_budget: int | None = None   # User-set daily token budget (None = unlimited)
+    tokens_used_today: int = 0               # Tokens consumed today (pre-compression)
+    tokens_saved_today: int = 0              # Tokens saved today via compression
+    project_type: str | None = None          # 'web' | 'cli' | 'library' | 'api' | None
+    auto_learn: bool = True                  # Auto-adapt compression from user reverts
+    smart_defaults: bool = True              # Suggest domain rules based on detected content
+
     def check_achievements(self) -> list[str]:
         newly_unlocked: list[str] = []
         for aid, ach in self.achievements.items():

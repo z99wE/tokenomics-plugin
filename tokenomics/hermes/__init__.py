@@ -144,6 +144,39 @@ def _handle_achievements(args: dict[str, Any]) -> dict[str, Any]:
     return {"ok": True, "data": {"newly_unlocked": newly}}
 
 
+def _handle_budget(args: dict[str, Any]) -> dict[str, Any]:
+    sm = STATE_MANAGER
+    action = args.get("action")
+    if action == "set":
+        limit = args.get("limit")
+        if limit is None:
+            return {"ok": False, "error": "limit required for set action"}
+        sm.set_token_budget(limit)
+        return {"ok": True, "message": f"Daily token budget set to {limit} tokens"}
+    elif action == "check":
+        budget = sm.get_token_budget()
+        return {"ok": True, "data": {"budget": budget}}
+    elif action == "record":
+        tokens = args.get("tokens")
+        if tokens is None:
+            return {"ok": False, "error": "tokens required for record action"}
+        result = sm.record_tokens_used(tokens)
+        return {"ok": True, "data": result}
+    return {"ok": False, "error": f"unknown budget action: {action}"}
+
+
+def _handle_project(args: dict[str, Any]) -> dict[str, Any]:
+    sm = STATE_MANAGER
+    sm.set_project_type(args["type"])
+    return {"ok": True, "message": f"Project type set to: {args['type']}"}
+
+
+def _handle_learn(args: dict[str, Any]) -> dict[str, Any]:
+    sm = STATE_MANAGER
+    sm.set_auto_learn(args["enable"])
+    return {"ok": True, "message": f"Auto-learn {'enabled' if args['enable'] else 'disabled'}"}
+
+
 def _run_tool(name: str, args: dict[str, Any]) -> dict[str, Any]:
     handlers = {
         "tokenomics.enable": _handle_enable,
@@ -154,6 +187,9 @@ def _run_tool(name: str, args: dict[str, Any]) -> dict[str, Any]:
         "tokenomics.audit": _handle_audit,
         "tokenomics.domain": _handle_domain,
         "tokenomics.achievements": _handle_achievements,
+        "tokenomics.budget": _handle_budget,
+        "tokenomics.project": _handle_project,
+        "tokenomics.learn": _handle_learn,
     }
     if name in handlers:
         return handlers[name](args)
@@ -400,8 +436,68 @@ def register(ctx):
         description="Check for newly unlocked gamification achievements.",
         emoji="🏆",
     )
+    ctx.register_tool(
+        name="tokenomics.budget",
+        toolset="tokenomics",
+        schema={
+            "type": "object",
+            "properties": {
+                "action": {
+                    "type": "string",
+                    "enum": ["set", "check", "record"],
+                    "description": "Budget action: set daily limit, check current, record usage",
+                },
+                "limit": {
+                    "type": "integer",
+                    "description": "Daily token limit (for set action)",
+                },
+                "tokens": {
+                    "type": "integer",
+                    "description": "Tokens consumed (for record action)",
+                },
+            },
+            "required": ["action"],
+        },
+        handler=_run_tool,
+        description="Token budget management: set daily limits, track usage, get alerts.",
+        emoji="💰",
+    )
+    ctx.register_tool(
+        name="tokenomics.project",
+        toolset="tokenomics",
+        schema={
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["web", "cli", "library", "api", "none"],
+                    "description": "Project type for smart compression defaults",
+                },
+            },
+            "required": ["type"],
+        },
+        handler=_run_tool,
+        description="Set project type (web/cli/library/api) for smart default domain rules.",
+        emoji="📁",
+    )
+    ctx.register_tool(
+        name="tokenomics.learn",
+        toolset="tokenomics",
+        schema={
+            "type": "object",
+            "properties": {
+                "enable": {
+                    "type": "boolean",
+                    "description": "Enable or disable auto-learn from user reverts",
+                },
+            },
+            "required": ["enable"],
+        },
+        handler=_run_tool,
+        description="Toggle auto-learning from user revert patterns.",
+        emoji="🧠",
+    )
 
-    ctx.register_hook("pre_llm_call", _hook_pre_llm_call)
     ctx.register_hook("pre_tool_call", _hook_pre_tool_call)
     ctx.register_hook("post_tool_call", _hook_post_tool_call)
     ctx.register_hook("on_session_start", _hook_on_session_start)
