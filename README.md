@@ -337,3 +337,60 @@ Tokenomics is **engineered independently** as its own project. It reimplements t
 - [caveman](https://github.com/JuliusBrussee/caveman) — inspiration for prose compression
 - [ponytail](https://github.com/DietrichGebert/ponytail) — inspiration for code minimization
 - [Agent Skills Standard](https://agentskills.io)
+- [dsh-plugin.org](https://dsh-plugin.org) — DeepSeek Harness Plugin hub
+
+---
+
+## DSH Plugin Submission (DeepSeek Harness)
+
+Tokenomics is also published as a **DSH Plugin** for the DeepSeek Harness ecosystem.
+
+### Submission Details
+
+| Field | Value |
+|-------|-------|
+| **Repository** | https://github.com/z99wE/tokenomics |
+| **Author** | Souvik Chakraborty |
+| **License** | MIT |
+| **Category** | Tools & Capabilities |
+| **Profile** | web |
+| **Entry Point** | `apply.js` (exports `apply(ctx)`) |
+| **Package** | `tokenomics-dsh-plugin` |
+
+### Install Command
+
+```bash
+# From NPM (when published):
+dsh plugin --profile web add tokenomics-dsh-plugin
+
+# From source (works now):
+dsh plugin --profile web add github:z99wE/tokenomics
+```
+
+### Pre-submission Checklist
+
+- [x] Repository is public
+- [x] GitHub topic `dsh-plugin` added
+- [x] README includes install command
+- [x] Plugin exports `apply(ctx)` module (`apply.js`)
+- [x] Repository root includes `package.json`
+- [x] Open-source license declared (MIT)
+- [ ] Publish to NPM (optional — for Plugin Hub listing)
+- [ ] Add `dsh-plugin` topic on GitHub
+
+### DSH Plugin FAQ
+
+**Does submitting cost money?**
+No. Submitting a DSH Plugin is completely free.
+
+**How long does review take?**
+Depends on whether the repository meets the requirements. Publish a public repo, add the `dsh-plugin` topic, write a solid README, and the plugin is usually listed within one refresh cycle.
+
+**Why hasn't my plugin been listed?**
+Common reasons: repo not public, `dsh-plugin` topic missing, no `package.json` at root, no install command in README, or no `apply(ctx)` export.
+
+**Is my plugin marked "unconfirmed"?**
+Newly listed plugins start as `unconfirmed` and become verified after manual review. Polish your README with install and usage notes to speed it up.
+
+**Can I submit a non-open-source plugin?**
+No. The hub only lists plugins from public repositories with source access.

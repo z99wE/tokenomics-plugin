@@ -1,0 +1,37 @@
+{
+  "name": "tokenomics-dsh-plugin",
+  "version": "2.3.0",
+  "description": "Tokenomics agentic-efficiency suite: compress agent prose, minimize code generation, track token savings, token budget, gamification, subagent propagation. Inspired by caveman and ponytail, engineered independently.",
+  "main": "apply.js",
+  "apply": "apply.js",
+  "author": "Souvik Chakraborty <souvikchakraborty@souvik.local>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/z99wE/tokenomics.git"
+  },
+  "keywords": [
+    "dsh-plugin",
+    "tokenomics",
+    "ai-agent",
+    "token-compression",
+    "prose-compression",
+    "code-minimization",
+    "gamification",
+    "agentic-efficiency",
+    "deepseek-harness"
+  ],
+  "category": "Tools & Capabilities",
+  "profile": "web",
+  "engines": {
+    "node": ">=18.0.0",
+    "python": ">=3.9.0"
+  },
+  "scripts": {
+    "test": "python -m unittest tokenomics.tests.test_core tokenomics.tests.test_hermes tokenomics.tests.test_cli",
+    "install:python": "pip install tokenomics",
+    "start": "node apply.js"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
