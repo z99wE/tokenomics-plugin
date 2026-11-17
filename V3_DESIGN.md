@@ -9,13 +9,13 @@
 
 ## Executive Summary
 
-Tokenomics v1.0–2.0 merged **caveman** (prose compression) + **ponytail** (code minimization) into a single tool with token-savings estimation. It works, but it's fundamentally a *wrapper* around two existing ideas — it doesn't add a unique capability that neither has alone.
+Tokenomics v1.0–2.0 explored **caveman-inspired prose compression** + **ponytail-inspired code minimization** into a single tool with token-savings estimation. It works, but it's fundamentally a *first implementation* — it doesn't add a unique capability that neither has alone.
 
 **v3.0.0 changes that.** Tokenomics becomes an **agentic efficiency layer** that sits between the agent and its output, understanding *context*, *intent*, and *consequences* before compressing anything. It doesn't just shorten text — it understands *what* is being said, *why* it's being said, and *whether compressing it is safe*.
 
 ## The Core Differentiator
 
-| | Caveman | Ponytail | Tokenomics v3.0.0 |
+| | **Caveman-inspired** | **Ponytail-inspired** | **Tokenomics v3.0.0** |
 |---|---------|----------|-------------------|
 | **What it compresses** | Prose output | Code generation | **Both, with context awareness** |
 | **Understands intent?** | No | No | **Yes** — classifies content before compressing |
@@ -52,8 +52,8 @@ Tokenomics v1.0–2.0 merged **caveman** (prose compression) + **ponytail** (cod
                  │
 ┌────────────────▼────────────────────────────────────────────┐
 │  COMPRESSION ENGINE                                         │
-│  • Caveman prose compression (drop filler/hedging/etc.)    │
-│  • Ponytail code minimization (YAGNI ladder)               │
+│  • Caveman-inspired prose compression (drop filler/hedging/etc.)    │
+│  • Ponytail-inspired code minimization (YAGNI-inspired ladder)               │
 │  • Context-appropriate mix of both                         │
 └────────────────┬────────────────────────────────────────────┘
                  │
@@ -152,11 +152,11 @@ enable      Activate compression + savings display
 disable     Deactivate — clean passthrough
 status      Show cumulative savings, level, streak, achievements
 estimate    Preview token savings for specific text
-review      Ponytail-style over-engineering review of code
+review      Tokenomics-style over-engineering review of code
 audit       Full audit: savings, ratio, level, streak, recommendations
 domain      Manage selective compression rules (never/always/preset/list)
 achievements Check for newly unlocked achievements
-ladder      Show ponytail YAGNI decision ladder
+ladder      Show decision ladder
 logo        Show ASCII logo
 context     Show detected context for a piece of text
 coach       Get coaching on token-efficient communication
@@ -173,7 +173,7 @@ coach       Get coaching on token-efficient communication
 | `tokenomics.disable` | Deactivate — clean passthrough |
 | `tokenomics.status` | Cumulative savings, level, streak, achievements |
 | `tokenomics.estimate` | Preview before/after tokens for specific text |
-| `tokenomics.review` | Ponytail over-engineering review |
+|| `tokenomics.review` | Tokenomics-style over-engineering review |
 | `tokenomics.audit` | Full audit with recommendations |
 | `tokenomics.domain` | Manage selective compression rules |
 | `tokenomics.achievements` | Check newly unlocked achievements |
@@ -181,7 +181,7 @@ coach       Get coaching on token-efficient communication
 **Hooks:**
 | Hook | Effect |
 |------|--------|
-| `pre_llm_call` | Injects ponytail YAGNI ladder into LLM context |
+| `pre_llm_call` | Injects decision ladder into LLM context |
 | `pre_tool_call` | Compresses string args before tool execution |
 | `post_tool_call` | Compresses tool result output + tracks savings |
 | `on_session_start` | Writes preview widget |

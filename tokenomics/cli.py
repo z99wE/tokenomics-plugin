@@ -1,4 +1,7 @@
-"""Tokenomics CLI v1.0.0 — Cross-platform command-line interface."""
+"""Tokenomics CLI v2.0.0 — Cross-platform command-line interface.
+
+Inspired by caveman and ponytail, engineered independently as its own system.
+"""
 
 from __future__ import annotations
 
@@ -21,7 +24,7 @@ def _print_logo() -> None:
 def cmd_enable(args: argparse.Namespace) -> int:
     state = StateManager().enable()
     write_preview(state)
-    print("✓ Tokenomics enabled — prose compression + ponytail guidance active.")
+    print("✓ Tokenomics enabled — prose compression + decision guidance active.")
     print("  Token savings shown on every output.")
     return 0
 
@@ -187,7 +190,7 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers.add_parser("enable", help="Enable tokenomics compression")
     subparsers.add_parser("disable", help="Disable tokenomics compression")
     subparsers.add_parser("status", help="Show tokenomics status")
-    subparsers.add_parser("ladder", help="Show ponytail YAGNI decision ladder")
+    subparsers.add_parser("ladder", help="Show Tokenomics decision ladder")
     subparsers.add_parser("logo", help="Show ASCII logo")
     subparsers.add_parser("achievements", help="Check for new achievements")
 

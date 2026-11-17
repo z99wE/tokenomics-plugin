@@ -1,6 +1,6 @@
 ---
 name: tokenomics
-description: "Merged caveman + ponytail: compress agent prose, minimize code generation, track token savings. Works with Claude Code, Cursor, Antigravity, Codex, Hermes, and other SKILL.md-compatible agents."
+description: "Inspired by caveman and ponytail, engineered independently: compress agent prose, minimize code generation, track token savings. Works with Claude Code, Cursor, Antigravity, Codex, Hermes, and other SKILL.md-compatible agents."
 license: MIT
 metadata:
   version: 1.0.0
@@ -23,10 +23,11 @@ metadata:
 
 **Small mouth, big brain. Minimum code, maximum impact.**
 
-Tokenomics merges two proven agent behaviors into one skill:
+Tokenomics is inspired by the concepts behind caveman (prose compression)
+and ponytail (code minimization), engineered independently as its own system.
 
-- **Caveman** compresses what the agent *says*: drops articles, filler, pleasantries, hedging. Keeps code blocks, technical terms, errors exact. ~65% fewer output tokens.
-- **Ponytail** compresses what the agent *builds*: YAGNI decision ladder before any code — need it? → reuse? → stdlib? → native? → dep? → one line? → minimum. ~54% less code.
+- **Caveman-inspired** compresses what the agent *says*: drops articles, filler, pleasantries, hedging. Keeps code blocks, technical terms, errors exact. ~65% fewer output tokens.
+- **Ponytail-inspired** compresses what the agent *builds*: decision ladder before any code — need it? → reuse? → stdlib? → native? → dep? → one line? → minimum. ~54% less code.
 - **Tokenomics** displays estimated token savings on every output when active.
 
 ---

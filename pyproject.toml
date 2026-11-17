@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tokenomics"
-version = "1.0.0"
-description = "Enhanced Caveman + Ponytail suite: compress agent prose, minimize code, save tokens, gamification"
+version = "2.0.0"
+description = "Tokenomics agentic-efficiency suite: compress agent prose, minimize code generation, track token savings. Inspired by caveman and ponytail, engineered independently."
 readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.9"
 authors = [{name = "Tokenomics Contributors"}]
-keywords = ["ai", "agent", "token", "compression", "caveman", "ponytail", "cli", "skill", "gamification"]
+keywords = ["ai", "agent", "token", "compression", "cli", "skill", "gamification", "agentic", "efficiency", "token-savings"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",

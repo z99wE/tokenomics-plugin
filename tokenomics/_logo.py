@@ -14,8 +14,9 @@ LOGO = r"""
                                    ███████║███████╗ ███████║██║     ███████║
                                    ╚══════╝╚══════╝ ╚══════╝╚═╝     ╚══════╝
 
-                              Tokenomics v0.2.0
-                         Caveman + Ponytail = Maximum Efficiency
+                              Tokenomics v2.0.0
+                       Agentic Efficiency Layer for AI Agents
+              Inspired by caveman and ponytail — engineered by us
                          Compress prose. Minimize code. Save tokens.
 """
 

@@ -1,8 +1,9 @@
-"""Hermes plugin entry point for Tokenomics v1.0.0.
+"""Hermes plugin entry point for Tokenomics v2.0.0.
 
-Registers tools and hooks for caveman prose compression, ponytail code
-minimization, token-savings estimation, gamification, learned compression,
-selective domain rules, and subagent propagation.
+Registers tools and hooks for Tokenomics agentic-efficiency features:
+prose compression, code minimization, token-savings estimation,
+gamification, learned compression, selective domain rules, and
+subagent propagation.
 """
 
 from __future__ import annotations

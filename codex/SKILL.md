@@ -1,6 +1,6 @@
 ---
 name: tokenomics
-description: "Merged caveman + ponytail: compress agent prose, minimize code generation, track token savings. Codex-compatible SKILL.md skill."
+description: "Inspired by caveman and ponytail, engineered independently: compress agent prose, minimize code generation, track token savings. Codex-compatible SKILL.md skill."
 license: MIT
 metadata:
   version: 1.0.0
@@ -15,7 +15,9 @@ metadata:
 
 **Small mouth, big brain. Minimum code, maximum impact.**
 
-Tokenomics merges **caveman** (prose compression) + **ponytail** (code minimization) into one Codex skill with token-savings estimation.
+Tokenomics is inspired by the concepts behind caveman (prose compression)
+and ponytail (code minimization), engineered independently as its own Codex
+skill with token-savings estimation.
 
 ## Triggers
 

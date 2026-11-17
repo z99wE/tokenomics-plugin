@@ -1,14 +1,24 @@
-"""Tokenomics Core v1.0.0 — Enhanced Caveman + Ponytail Suite.
+"""Tokenomics Core v2.0.0 — Agentic-Era Token Efficiency Layer.
+
+Compress agent prose, minimize code generation, display estimated token savings.
+
+Tokenomics is inspired by the concepts behind caveman (prose compression)
+and ponytail (code minimization), but engineered independently as its own
+system with context awareness, learned compression, gamification,
+subagent propagation, and cross-agent memory.
 
 Features:
 - Real token counting (tiktoken with fallback)
-- Domain presets (docs, commit, review, chat, ultra)
-- Ponytail auto-rewrite with safety gate
-- Caveman pre-generation (system prompt compression)
+- Context-aware compression (code, docs, config, secrets, sql, prose)
+- Domain presets (standard, docs, commit, review, chat, ultra, code, secrets)
+- Ponytail-inspired auto-rewrite with safety gate
+- Caveman-inspired prose compression
 - Learned compression (user revert/adapt tracking)
 - Cross-agent sync (shared state with file locking)
 - Gamification (streaks, achievements, levels)
 - Selective domain compression (allowlist/denylist)
+- Code-reviewer integration
+- Claude-coach integration
 """
 
 from __future__ import annotations

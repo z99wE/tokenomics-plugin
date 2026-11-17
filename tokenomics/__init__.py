@@ -1,8 +1,12 @@
-"""Hermes plugin entry point for Tokenomics v1.0.0.
+"""Tokenomics v2.0.0 — Agentic-Era Token Efficiency Layer.
 
-Registers tools and hooks for caveman prose compression, ponytail code
-minimization, token-savings estimation, gamification, learned compression,
-selective domain rules, and subagent propagation.
+Compress agent prose, minimize code generation, display estimated token savings.
+Cross-platform: works with Hermes, Claude Code, Cursor, Antigravity, Codex, and more.
+
+Inspired by the concepts behind caveman (prose compression) and ponytail
+(code minimization), but engineered independently as its own system with
+context awareness, learned compression, gamification, subagent propagation,
+and cross-agent memory.
 """
 
 from __future__ import annotations

@@ -1,7 +1,7 @@
 name: tokenomics
 version: 2.0.0
 title: "Tokenomics"
-description: "Enhanced Caveman + Ponytail suite: compresses agent prose, minimizes code, propagates to subagents, gamification, learned compression, selective domain rules, preview-pane widget."
+description: "Tokenomics agentic-efficiency suite: compresses agent prose, minimizes code generation, propagates to subagents, gamification, learned compression, selective domain rules, preview-pane widget. Inspired by caveman and ponytail, engineered independently."
 author: "Tokenomics Contributors"
 api: hermes/__init__.py
 requires_hermes: ">=0.22.0"
