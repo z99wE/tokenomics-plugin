@@ -9,15 +9,15 @@ import argparse
 import sys
 from typing import Any
 
-from ._logo import get_logo, get_tagline
+from ._logo import logo_path, tagline, subtitle, description
 from .core import compress_prose, estimate_tokens, ponytail_ladder, review_code
 from .preview import write_preview
 from .state import StateManager
 
 
 def _print_logo() -> None:
-    print(get_logo())
-    print(get_tagline())
+    print(f"Tokenomics logo: {logo_path()}")
+    print(tagline())
     print()
 
 
@@ -145,7 +145,7 @@ def cmd_ladder(args: argparse.Namespace) -> int:
 
 
 def cmd_logo(args: argparse.Namespace) -> int:
-    print(get_logo())
+    print(f"Logo: {logo_path()}")
     return 0
 
 

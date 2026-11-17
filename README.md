@@ -1,20 +1,4 @@
-                                   ███╗   ███╗ █████╗ ██╗   ██╗████████╗
-                                   ████╗ ████║██╔══██╗██║   ██║╚══██╔══╝
-                                   ██╔████╔██║███████║██║   ██║   ██║
-                                   ██║╚██╔╝██║██╔══██║██║   ██║   ██║
-                                   ██║ ╚═╝ ██║██║  ██║╚██████╔╝   ██║
-                                   ╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝    ╚═╝
-                                   ███████╗███████╗ █████╗ ██████╗ ███████╗
-                                   ██╔════╝██╔════╝██╔══██╗██╔══██╗██╔════╝
-                                   ███████╗█████╗  ███████║███████║███████╗
-                                   ╚════██║██╔══╝  ╚════██║██╔════╝╚════██║
-                                   ███████║███████╗ ███████║██║     ███████║
-                                   ╚══════╝╚══════╝ ╚══════╝╚═╝     ╚══════╝
-
-                              Tokenomics v2.3.0
-                       Agentic Efficiency Layer for AI Agents
-              Inspired by caveman and ponytail — engineered independently
-                         Compress prose. Minimize code. Save tokens.
+![Tokenomics](assets/logo.png)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.9+](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://python.org)
