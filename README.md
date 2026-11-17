@@ -77,12 +77,12 @@ flowchart TD
     B -->|Yes| D
     F --> D
 
-    classDef start fill:#f9f,stroke:#333,stroke-width:2px
-    classDef safety fill:#bbf,stroke:#333,stroke-width:2px
-    classDef compress fill:#bfb,stroke:#333,stroke-width:2px
-    classDef features fill:#ffd700,stroke:#333,stroke-width:2px
-    classDef completed fill:#9f9,stroke:#333,stroke-width:2px
-    classDef skip fill:#f96,stroke:#333,stroke-width:2px
+    classDef start fill:#f9f,stroke:#000,stroke-width:2px,color:#111
+    classDef safety fill:#bbf,stroke:#000,stroke-width:2px,color:#111
+    classDef compress fill:#bfb,stroke:#000,stroke-width:2px,color:#111
+    classDef features fill:#ffd700,stroke:#000,stroke-width:2px,color:#111
+    classDef completed fill:#9f9,stroke:#000,stroke-width:2px,color:#111
+    classDef skip fill:#f96,stroke:#000,stroke-width:2px,color:#111
 
     class A,B start
     class D,E,F safety
@@ -107,13 +107,13 @@ graph LR
         6 --> 7[7. Min<br/>code]
     end
 
-    style 1 fill:#ffcccc,stroke:#333,stroke-width:2px
-    style 2 fill:#ffcccc,stroke:#333,stroke-width:2px
-    style 3 fill:#ffcccc,stroke:#333,stroke-width:2px
-    style 4 fill:#ffcccc,stroke:#333,stroke-width:2px
-    style 5 fill:#ffcccc,stroke:#333,stroke-width:2px
-    style 6 fill:#ffcccc,stroke:#333,stroke-width:2px
-    style 7 fill:#ccffcc,stroke:#333,stroke-width:2px
+    style 1 fill:#ffcccc,stroke:#000,stroke-width:2px,color:#111
+    style 2 fill:#ffcccc,stroke:#000,stroke-width:2px,color:#111
+    style 3 fill:#ffcccc,stroke:#000,stroke-width:2px,color:#111
+    style 4 fill:#ffcccc,stroke:#000,stroke-width:2px,color:#111
+    style 5 fill:#ffcccc,stroke:#000,stroke-width:2px,color:#111
+    style 6 fill:#ffcccc,stroke:#000,stroke-width:2px,color:#111
+    style 7 fill:#ccffcc,stroke:#000,stroke-width:2px,color:#111
 ```
 
 ---
@@ -127,6 +127,9 @@ sequenceDiagram
     participant S as Subagent
 
     autonumber
+
+    classDef participant fill:#f9f,stroke:#000,stroke-width:2px,color:#111,textColor:#111
+    class U,A,S participant
 
     U->>A: delegate_task<br/>with task
     Note over A: Tokenomics applies<br/>context + decision guidance
