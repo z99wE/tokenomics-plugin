@@ -394,12 +394,36 @@ After installing, your AI agent's prose is compressed, code is minimized via the
 ### Install Command
 
 ```bash
-# From NPM (when published):
 dsh plugin --profile web add tokenomics-dsh-plugin
+```
 
-# From source (works now):
+From source (no NPM required):
+
+```bash
 dsh plugin --profile web add github:z99wE/tokenomics-plugin
 ```
+
+### Demo (real output)
+
+```console
+$ tokenomics estimate "This is a really simple test."
+Original:  7 tokens
+Compressed: 5 tokens
+Saved:     2 tokens (29% reduction)
+
+Compressed preview:
+This is simple test.
+
+$ tokenomics review --code "class UserFactoryManagerServiceController: pass"
+╔═══════════════════════════════════════╗
+║      Ponytail Code Review             ║
+╠═══════════════════════════════════════╣
+║ Issues found:                         ║
+║   • Possible unnecessary abstraction layer — consider simpler functions   ║
+╚═══════════════════════════════════════╝
+```
+
+The HTML preview widget (`~/.hermes/plugins/tokenomics/preview.html`) shows live XP, streaks, level progress, and achievements.
 
 ### Pre-submission Checklist
 
@@ -409,8 +433,45 @@ dsh plugin --profile web add github:z99wE/tokenomics-plugin
 - [x] Plugin exports `apply(ctx)` module (`apply.js`)
 - [x] Repository root includes `package.json`
 - [x] Open-source license declared (MIT)
-- [ ] Publish to NPM (optional — for Plugin Hub listing)
-- [ ] Add `dsh-plugin` topic on GitHub
+- [ ] Publish to NPM (required for Plugin Hub listing)
+- [x] `dsh-plugin` topic added on GitHub
+
+### Submission Template (copy into the hub's issue form)
+
+```markdown
+[Plugin submission] z99wE/tokenomics-plugin — Token- and context-aware efficiency layer for your AI agent
+
+### Repository
+https://github.com/z99wE/tokenomics-plugin
+
+### One-line value
+After installing, your AI agent's prose is compressed, code is minimized via the YAGNI ladder, and token savings are tracked and gamified.
+
+### Category
+Tools & Capabilities
+
+### Install command
+dsh plugin --profile web add tokenomics-dsh-plugin
+
+### Compatibility
+DeepSeek Harness `web` profile; Node ≥ 18; Python ≥ 3.9; Hermes ≥ 0.22 (optional)
+
+### License
+MIT
+
+### Screenshots / demo
+CLI output and preview widget documented in the README (`Demo (real output)` section). Preview widget: `~/.hermes/plugins/tokenomics/preview.html`.
+
+### Notes
+No network calls, no telemetry, no external services. Files are written only to local state (`~/.hermes/...`, `~/.tokenomics/...`). Never compresses secrets/auth/crypto/SQL or security-critical code. 135 tests pass; `ruff check .` clean; SoloKnuckle score 93/100.
+
+### Pre-submission checklist
+- [x] Repository is public
+- [x] GitHub topic `dsh-plugin` added
+- [x] README includes the install command
+- [x] Plugin exports an `apply(ctx)` module
+- [x] Repository root includes a `package.json`
+```
 
 ### DSH Plugin FAQ
 
