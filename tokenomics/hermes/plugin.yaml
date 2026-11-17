@@ -1,0 +1,23 @@
+name: tokenomics
+version: 0.2.0
+title: "Tokenomics"
+description: "Merged caveman + ponytail: compresses agent prose, minimizes code generation, propagates to subagents, and displays estimated token savings on every output via preview-pane widget."
+author: "Tokenomics Contributors"
+api: hermes/__init__.py
+requires_hermes: ">=0.22.0"
+defaultEnabled: false
+provides_tools:
+  - tokenomics.enable
+  - tokenomics.disable
+  - tokenomics.status
+  - tokenomics.estimate
+  - tokenomics.review
+  - tokenomics.audit
+provides_hooks:
+  - pre_llm_call
+  - pre_tool_call
+  - post_tool_call
+  - on_session_start
+  - on_session_end
+  - delegate_task
+requires_env: []
