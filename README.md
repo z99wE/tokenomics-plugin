@@ -12,6 +12,8 @@
 <p align="center">
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
   <a href="https://python.org"><img src="https://img.shields.io/badge/Python-3.9+-blue.svg" alt="Python 3.9+"></a>
+  <a href="https://www.npmjs.com/package/@soch-tokenomics/tokenomics-dsh-plugin"><img src="https://img.shields.io/npm/v/@soch-tokenomics/tokenomics-dsh-plugin.svg?style=flat-square" alt="npm: @soch-tokenomics/tokenomics-dsh-plugin"></a>
+  <a href="https://dsh-plugin.org"><img src="https://img.shields.io/badge/DSH%20Plugin-compatible-0e7490.svg?style=flat-square" alt="DSH Plugin"></a>
   <a href="https://github.com/z99wE/tokenomics-plugin"><img src="https://img.shields.io/badge/Tests-135%20passing-brightgreen.svg" alt="Tests: 135 passing"></a>
   <a href="https://claude.ai/code"><img src="https://img.shields.io/badge/Claude%20Code-supported-green.svg" alt="Claude Code"></a>
   <a href="https://cursor.sh"><img src="https://img.shields.io/badge/Cursor-supported-green.svg" alt="Cursor"></a>
@@ -315,6 +317,16 @@ Copy `SKILL.md` to your agent's skills directory:
 
 All platforms use the same open **SKILL.md** standard (agentskills.io).
 
+### Option 5: DeepSeek Harness (DSH Plugin)
+Install directly from the npm registry for in-app integration:
+```bash
+dsh plugin --profile web add @soch-tokenomics/tokenomics-dsh-plugin
+```
+Or install from source:
+```bash
+dsh plugin --profile web add github:z99wE/tokenomics-plugin
+```
+
 ---
 
 ## Testing
@@ -359,84 +371,78 @@ Tokenomics is **engineered independently** as its own project. It reimplements t
 
 ---
 
-## DSH Plugin Submission (DeepSeek Harness)
+## DeepSeek Harness Plugin (DSH Plugin)
 
-Tokenomics is also published as a **DSH Plugin** for the DeepSeek Harness ecosystem.
+Tokenomics is officially packaged and published as a **DeepSeek Harness (DSH) Plugin** listed on the community plugin directory ([dsh-plugin.org](https://dsh-plugin.org)).
+
+> *Community Notice: This is an independent open-source community plugin for DeepSeek Harness (DSH) and is not affiliated with DeepSeek AI.*
 
 ### One-Line Value
 
 After installing, your AI agent's prose is compressed, code is minimized via the YAGNI ladder, and token savings are tracked and gamified — with zero hidden prompt injection and no secrets ever touched.
 
-### Submission Details
+### Category
 
-| Field | Value |
-|-------|-------|
-| **Repository** | https://github.com/z99wE/tokenomics-plugin |
-| **Author** | Souvik Chakraborty |
-| **License** | MIT |
-| **Category** | Tools & Capabilities |
-| **Profile** | web |
-| **Entry Point** | `apply.js` (exports `apply(ctx)`) |
-| **Package** | `@soch-tokenomics/tokenomics-dsh-plugin` |
+**Tools & Capabilities** *(one of the 11 official DSH categories)*
 
-### Trust Signals
+### Copyable Install Command
 
-| Signal | Details |
-|--------|---------|
-| **License** | MIT — free to reuse, modify, and build on |
-| **Permissions** | None beyond local filesystem state (`~/.hermes/...`, `~/.tokenomics/...`). No network calls, no telemetry |
-| **External services** | None — all processing is local |
-| **Compatibility** | DeepSeek Harness `web` profile · Python ≥ 3.9 · Node ≥ 18 · Hermes ≥ 0.22 |
-| **Safety** | Never compresses secrets, auth, crypto, SQL, or security-critical code |
-| **Screenshots / demo** | Preview widget: `~/.hermes/plugins/tokenomics/preview.html` (HTML dashboard with XP, streaks, achievements). See `assets/logo.png` for branding |
-| **Tests** | 135 passing (core, Hermes plugin, CLI) · `ruff check .` clean |
-
-### Install Command
+Install the published NPM package for 1-click in-app availability:
 
 ```bash
 dsh plugin --profile web add @soch-tokenomics/tokenomics-dsh-plugin
 ```
 
-From source (no NPM required):
+Or install from source:
 
 ```bash
 dsh plugin --profile web add github:z99wE/tokenomics-plugin
 ```
 
-### Demo (real output)
+### Trust Signals & Risk Disclosure
+
+| Trust Signal | Specification |
+|:---|:---|
+| **License** | **MIT License** — 100% open-source and free to inspect, modify, and build on |
+| **Permissions** | Zero elevated permissions. Writes solely to local user state (`~/.hermes/...`, `~/.tokenomics/...`) |
+| **External Services** | **None.** Operates 100% locally with zero network calls, zero telemetry, and zero tracking |
+| **Safety Invariant** | Strictly avoids compressing secrets, tokens, auth headers, SQL queries, or crypto primitives |
+| **Compatibility** | DeepSeek Harness `web` profile · Node.js ≥ 18 · Python ≥ 3.9 · Hermes ≥ 0.22 |
+| **Entry Point Spec** | Exports standard Cordis `apply(ctx)` plugin contract (`index.mjs` / `apply.js`) |
+| **Automated Verification** | 135 passing test cases · `ruff check .` clean |
+
+### Visible Proof & Real Demo Output
 
 ```console
 $ tokenomics estimate "This is a really simple test."
-Original:  7 tokens
+Original:   7 tokens
 Compressed: 5 tokens
-Saved:     2 tokens (29% reduction)
+Saved:      2 tokens (29% reduction)
 
 Compressed preview:
 This is simple test.
 
 $ tokenomics review --code "class UserFactoryManagerServiceController: pass"
-╔═══════════════════════════════════════╗
-║      Ponytail Code Review             ║
-╠═══════════════════════════════════════╣
-║ Issues found:                         ║
+╔═══════════════════════════════════════════════════════════════════════════╗
+║                      Ponytail Code Review                                 ║
+╠═══════════════════════════════════════════════════════════════════════════╣
+║ Issues found:                                                             ║
 ║   • Possible unnecessary abstraction layer — consider simpler functions   ║
-╚═══════════════════════════════════════╝
+╚═══════════════════════════════════════════════════════════════════════════╝
 ```
 
-The HTML preview widget (`~/.hermes/plugins/tokenomics/preview.html`) shows live XP, streaks, level progress, and achievements.
+The companion HTML preview widget (`~/.hermes/plugins/tokenomics/preview.html`) renders live XP, streak tracking, level progression, and token achievements.
 
-### Pre-submission Checklist
+### DSH Plugin Listing Requirements Checklist
 
-- [x] Repository is public
-- [x] GitHub topic `dsh-plugin` added
-- [x] README includes install command
-- [x] Plugin exports `apply(ctx)` module (`apply.js`)
-- [x] Repository root includes `package.json`
-- [x] Open-source license declared (MIT)
-- [x] Publish to NPM (required for Plugin Hub listing)
-- [x] `dsh-plugin` topic added on GitHub
+- [x] **Public Repository:** [https://github.com/z99wE/tokenomics-plugin](https://github.com/z99wE/tokenomics-plugin)
+- [x] **GitHub Topic:** `dsh-plugin` topic added to repository
+- [x] **Copyable Install Command:** Listed in README (`dsh plugin --profile web add @soch-tokenomics/tokenomics-dsh-plugin`)
+- [x] **Plugin Specification:** Exports standard `apply(ctx)` module (`apply.js` / `index.mjs`)
+- [x] **Root `package.json`:** Includes package identity, version, repository URL, and Cordis patch definition
+- [x] **NPM Package Published:** [`@soch-tokenomics/tokenomics-dsh-plugin@2.4.0`](https://www.npmjs.com/package/@soch-tokenomics/tokenomics-dsh-plugin) (Public access)
 
-### Submission Template (copy into the hub's issue form)
+### Submission Details
 
 ```markdown
 [Plugin submission] z99wE/tokenomics-plugin — Token- and context-aware efficiency layer for your AI agent
@@ -445,7 +451,7 @@ The HTML preview widget (`~/.hermes/plugins/tokenomics/preview.html`) shows live
 https://github.com/z99wE/tokenomics-plugin
 
 ### One-line value
-After installing, your AI agent's prose is compressed, code is minimized via the YAGNI ladder, and token savings are tracked and gamified.
+After installing, your AI agent's prose is compressed, code is minimized via the YAGNI ladder, and token savings are tracked and gamified — with no hidden prompt injection and no secrets ever touched.
 
 ### Category
 Tools & Capabilities
@@ -453,17 +459,19 @@ Tools & Capabilities
 ### Install command
 dsh plugin --profile web add @soch-tokenomics/tokenomics-dsh-plugin
 
+(Or from source: dsh plugin --profile web add github:z99wE/tokenomics-plugin)
+
 ### Compatibility
-DeepSeek Harness `web` profile; Node ≥ 18; Python ≥ 3.9; Hermes ≥ 0.22 (optional)
+DeepSeek Harness `web` profile; Node >= 18; Python >= 3.9; Hermes >= 0.22 (optional)
 
 ### License
 MIT
 
 ### Screenshots / demo
-CLI output and preview widget documented in the README (`Demo (real output)` section). Preview widget: `~/.hermes/plugins/tokenomics/preview.html`.
+CLI output and preview widget documented in the README (`Visible Proof & Real Demo Output` section). Preview widget: `~/.hermes/plugins/tokenomics/preview.html`.
 
 ### Notes
-No network calls, no telemetry, no external services. Files are written only to local state (`~/.hermes/...`, `~/.tokenomics/...`). Never compresses secrets/auth/crypto/SQL or security-critical code. For full tool functionality, install the Python companion CLI with `pip install tokenomics`; without it, the bundle mounts but its tools report the CLI as unavailable. 135 tests pass; `ruff check .` clean; SoloKnuckle score 93/100.
+No network calls, no telemetry, no external services. Files are written only to local state (`~/.hermes/...`, `~/.tokenomics/...`). Never compresses secrets/auth/crypto/SQL or security-critical code. Companion CLI installed via `pip install tokenomics`. 135 tests pass; `ruff check .` clean. NPM package: https://www.npmjs.com/package/@soch-tokenomics/tokenomics-dsh-plugin
 
 ### Pre-submission checklist
 - [x] Repository is public
@@ -471,21 +479,5 @@ No network calls, no telemetry, no external services. Files are written only to 
 - [x] README includes the install command
 - [x] Plugin exports an `apply(ctx)` module
 - [x] Repository root includes a `package.json`
+- [x] NPM publish: https://www.npmjs.com/package/@soch-tokenomics/tokenomics-dsh-plugin
 ```
-
-### DSH Plugin FAQ
-
-**Does submitting cost money?**
-No. Submitting a DSH Plugin is completely free.
-
-**How long does review take?**
-Depends on whether the repository meets the requirements. Publish a public repo, add the `dsh-plugin` topic, write a solid README, and the plugin is usually listed within one refresh cycle.
-
-**Why hasn't my plugin been listed?**
-Common reasons: repo not public, `dsh-plugin` topic missing, no `package.json` at root, no install command in README, or no `apply(ctx)` export.
-
-**Is my plugin marked "unconfirmed"?**
-Newly listed plugins start as `unconfirmed` and become verified after manual review. Polish your README with install and usage notes to speed it up.
-
-**Can I submit a non-open-source plugin?**
-No. The hub only lists plugins from public repositories with source access.
