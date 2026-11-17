@@ -1,13 +1,24 @@
-![Tokenomics](assets/logo.png)
+<p align="center">
+  <img src="tokenomics/assets/logo.png" alt="Tokenomics" width="420">
+</p>
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.9+](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://python.org)
-[![Tests: 135 passing](https://img.shields.io/badge/Tests-135%20passing-brightgreen.svg)](https://github.com/z99wE/tokenomics)
-[![Claude Code](https://img.shields.io/badge/Claude%20Code-supported-green.svg)](https://claude.ai/code)
-[![Cursor](https://img.shields.io/badge/Cursor-supported-green.svg)](https://cursor.sh)
-[![Antigravity](https://img.shields.io/badge/Antigravity-supported-green.svg)](https://antigravity.sh)
-[![Codex](https://img.shields.io/badge/Codex-supported-green.svg)](https://openai.com/codex)
-[![Hermes](https://img.shields.io/badge/Hermes-supported-green.svg)](https://hermes-agent.nousresearch.com)
+<h1 align="center">Tokenomics</h1>
+
+<p align="center">
+  <strong>Small mouth, big brain. Minimum code, maximum impact.</strong><br>
+  <em>Agentic efficiency layer for AI agents — compresses prose, minimizes code, tracks savings.</em>
+</p>
+
+<p align="center">
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+  <a href="https://python.org"><img src="https://img.shields.io/badge/Python-3.9+-blue.svg" alt="Python 3.9+"></a>
+  <a href="https://github.com/z99wE/tokenomics-plugin"><img src="https://img.shields.io/badge/Tests-135%20passing-brightgreen.svg" alt="Tests: 135 passing"></a>
+  <a href="https://claude.ai/code"><img src="https://img.shields.io/badge/Claude%20Code-supported-green.svg" alt="Claude Code"></a>
+  <a href="https://cursor.sh"><img src="https://img.shields.io/badge/Cursor-supported-green.svg" alt="Cursor"></a>
+  <a href="https://antigravity.sh"><img src="https://img.shields.io/badge/Antigravity-supported-green.svg" alt="Antigravity"></a>
+  <a href="https://openai.com/codex"><img src="https://img.shields.io/badge/Codex-supported-green.svg" alt="Codex"></a>
+  <a href="https://hermes-agent.nousresearch.com"><img src="https://img.shields.io/badge/Hermes-supported-green.svg" alt="Hermes"></a>
+</p>
 
 ---
 
@@ -40,102 +51,99 @@ Tokenomics is not a wrapper around either tool. It is a **separate engineering p
 
 ---
 
-## Mermaid Architecture
+## Architecture
 
 ```mermaid
 flowchart TD
-    subgraph Start ["Start"]
-        A([User Request]) --> B{Tokenomics<br/>Enabled?}
-    end
+    A([User Request]) --> B{Tokenomics<br/>Enabled?}
+    B -->|No| R[Normal Output<br/>No Compression]
+    B -->|Yes| D[Context Detection<br/>Code · Docs · Config · Secrets · SQL · Prose]
 
-    subgraph Safety ["Safety Gate"]
-        D[Context<br/>Detection] --> E[Security<br/>Sensitive?]
-        E -->|Yes| F[Skip<br/>Compression]
-        E -->|No| G[Safe to<br/>Compress]
-    end
+    D --> E{Security<br/>Sensitive?}
+    E -->|Yes| F[Skip Compression<br/>Safety First]
+    E -->|No| G[Safe to Compress]
 
-    subgraph Compress ["Compression Pipeline"]
-        G --> H[Selective<br/>Domain Rules]
-        H --> I[Learned<br/>Compression]
-        I --> J[Prose<br/>Compression]
-        J --> K[Code<br/>Minimization]
-        K --> L[Token<br/>Savings]
-    end
-
-    subgraph Features ["Features"]
-        L --> M[Budget<br/>Check]
-        M --> N[Gamification<br/>XP / Streaks]
-        N --> O[Preview<br/>Widget]
-        O --> P[Subagent<br/>Propagation]
-    end
-
-    subgraph Final ["End"]
-        P --> Q[Output with<br/>Savings Footer]
-    end
-
-    B -->|No| R[Normal<br/>Output]
-    B -->|Yes| D
     F --> D
+    G --> H[Selective Domain Rules<br/>Never · Always · Force Preset]
+    H --> I[Learned Compression<br/>Adapts to Revert Patterns]
+    I --> J[Caveman-Inspired<br/>Prose Compression]
+    J --> K[Ponytail-Inspired<br/>Code Minimization]
+    K --> L[Token Savings<br/>Estimation]
 
-    classDef start fill:#f9f,stroke:#000,stroke-width:2px,color:#111
-    classDef safety fill:#bbf,stroke:#000,stroke-width:2px,color:#111
-    classDef compress fill:#bfb,stroke:#000,stroke-width:2px,color:#111
-    classDef features fill:#ffd700,stroke:#000,stroke-width:2px,color:#111
-    classDef completed fill:#9f9,stroke:#000,stroke-width:2px,color:#111
-    classDef skip fill:#f96,stroke:#000,stroke-width:2px,color:#111
+    L --> M[Token Budget Check<br/>80% / 100% Alerts]
+    M --> N[Gamification<br/>XP · Level · Streak · Achievements]
+    N --> O[Preview Widget<br/>HTML Dashboard]
+    O --> P[Subagent Propagation<br/>delegate_task Context]
+    P --> Q([Output + Savings Footer])
 
-    class A,B start
-    class D,E,F safety
-    class H,I,J,K,L compress
-    class M,N,O,P features
-    class Q completed
+    classDef entry fill:#dbeafe,stroke:#1e40af,stroke-width:2px,color:#1e3a8a
+    classDef gate fill:#fef3c7,stroke:#92400e,stroke-width:2px,color:#78350f
+    classDef safety fill:#fee2e2,stroke:#991b1b,stroke-width:2px,color:#7f1d1d
+    classDef compress fill:#dcfce7,stroke:#166534,stroke-width:2px,color:#14532d
+    classDef feature fill:#ede9fe,stroke:#5b21b6,stroke-width:2px,color:#4c1d95
+    classDef done fill:#d1fae5,stroke:#065f46,stroke-width:2px,color:#064e3b
+    classDef skip fill:#fecaca,stroke:#b91c1c,stroke-width:2px,color:#7f1d1d
+
+    class A,Q entry
+    class B,D,E gate
+    class F safety
+    class G,H,I,J,K,L compress
+    class M,N,O,P feature
+    class Q done
     class F skip
+    class R skip
 ```
 
 ---
 
 ## Ponytail-Inspired Decision Ladder
 
-```mermaid
-graph LR
-    subgraph YAGNI ["YAGNI Ladder"]
-        1[1. Need<br/>it?] --> 2[2. In<br/>codebase?]
-        2 --> 3[3. Stdlib?]
-        3 --> 4[4. Native?]
-        4 --> 5[5. Dep?]
-        5 --> 6[6. One<br/>line?]
-        6 --> 7[7. Min<br/>code]
-    end
+Before writing any code, climb this ladder and **stop at the first rung that holds**:
 
-    style 1 fill:#ffcccc,stroke:#000,stroke-width:2px,color:#111
-    style 2 fill:#ffcccc,stroke:#000,stroke-width:2px,color:#111
-    style 3 fill:#ffcccc,stroke:#000,stroke-width:2px,color:#111
-    style 4 fill:#ffcccc,stroke:#000,stroke-width:2px,color:#111
-    style 5 fill:#ffcccc,stroke:#000,stroke-width:2px,color:#111
-    style 6 fill:#ffcccc,stroke:#000,stroke-width:2px,color:#111
-    style 7 fill:#ccffcc,stroke:#000,stroke-width:2px,color:#111
+```mermaid
+flowchart LR
+    R1["1 · Does it need to exist?<br/>(YAGNI — skip it)"] --> R2["2 · Already in codebase?<br/>(reuse it)"]
+    R2 --> R3["3 · Stdlib does it?<br/>(use it)"]
+    R3 --> R4["4 · Native platform feature?<br/>(use it)"]
+    R4 --> R5["5 · Installed dependency?<br/>(use it)"]
+    R5 --> R6["6 · Can it be one line?<br/>(write one line)"]
+    R6 --> R7["7 · Minimum code<br/>that works"]
+
+    classDef ask fill:#fee2e2,stroke:#991b1b,stroke-width:2px,color:#7f1d1d
+    classDef reuse fill:#fef3c7,stroke:#92400e,stroke-width:2px,color:#78350f
+    classDef stdlib fill:#dcfce7,stroke:#166534,stroke-width:2px,color:#14532d
+    classDef native fill:#dbeafe,stroke:#1e40af,stroke-width:2px,color:#1e3a8a
+    classDef dep fill:#ede9fe,stroke:#5b21b6,stroke-width:2px,color:#4c1d95
+    classDef oneline fill:#fae8ff,stroke:#86198f,stroke-width:2px,color:#701a75
+    classDef write fill:#d1fae5,stroke:#065f46,stroke-width:2px,color:#064e3b
+
+    class R1 ask
+    class R2 reuse
+    class R3 stdlib
+    class R4 native
+    class R5 dep
+    class R6 oneline
+    class R7 write
 ```
 
 ---
 
 ## Subagent Propagation
 
+When you delegate work to a subagent, Tokenomics context (compression rules, learned patterns, safety gates) travels with it.
+
 ```mermaid
 sequenceDiagram
+    autonumber
     participant U as User
     participant A as Agent
     participant S as Subagent
 
-    autonumber
-
-    classDef participant fill:#f9f,stroke:#000,stroke-width:2px,color:#111,textColor:#111
-    class U,A,S participant
-
-    U->>A: delegate_task<br/>with task
-    Note over A: Tokenomics applies<br/>context + decision guidance
-    A->>S: task with tokenomics<br/>rules applied
-    S->>S: Compresses prose<br/>Applies YAGNI ladder<br/>Reports savings
-    S->>A: Compressed output<br/>+ savings footer
+    U->>A: delegate_task(task)
+    Note over A: Tokenomics enabled → inject<br/>context + YAGNI guidance
+    A->>S: task + tokenomics note
+    S->>S: Compress prose · Apply YAGNI ladder · Track savings
+    S->>A: Compressed output + savings footer
     A->>U: Aggregated result
 ```
 
@@ -287,7 +295,7 @@ tokenomics enable
 
 ### Option 3: From source
 ```bash
-git clone https://github.com/z99wE/tokenomics.git
+git clone https://github.com/z99wE/tokenomics-plugin.git
 cd tokenomics
 pip install -e .
 tokenomics enable
@@ -343,7 +351,7 @@ Tokenomics is **engineered independently** as its own project. It reimplements t
 
 ## Links
 
-- [GitHub Repository](https://github.com/z99wE/tokenomics)
+- [GitHub Repository](https://github.com/z99wE/tokenomics-plugin)
 - [caveman](https://github.com/JuliusBrussee/caveman) — inspiration for prose compression
 - [ponytail](https://github.com/DietrichGebert/ponytail) — inspiration for code minimization
 - [Agent Skills Standard](https://agentskills.io)
@@ -355,17 +363,33 @@ Tokenomics is **engineered independently** as its own project. It reimplements t
 
 Tokenomics is also published as a **DSH Plugin** for the DeepSeek Harness ecosystem.
 
+### One-Line Value
+
+After installing, your AI agent's prose is compressed, code is minimized via the YAGNI ladder, and token savings are tracked and gamified — with zero hidden prompt injection and no secrets ever touched.
+
 ### Submission Details
 
 | Field | Value |
 |-------|-------|
-| **Repository** | https://github.com/z99wE/tokenomics |
+| **Repository** | https://github.com/z99wE/tokenomics-plugin |
 | **Author** | Souvik Chakraborty |
 | **License** | MIT |
 | **Category** | Tools & Capabilities |
 | **Profile** | web |
 | **Entry Point** | `apply.js` (exports `apply(ctx)`) |
 | **Package** | `tokenomics-dsh-plugin` |
+
+### Trust Signals
+
+| Signal | Details |
+|--------|---------|
+| **License** | MIT — free to reuse, modify, and build on |
+| **Permissions** | None beyond local filesystem state (`~/.hermes/...`, `~/.tokenomics/...`). No network calls, no telemetry |
+| **External services** | None — all processing is local |
+| **Compatibility** | DeepSeek Harness `web` profile · Python ≥ 3.9 · Node ≥ 18 · Hermes ≥ 0.22 |
+| **Safety** | Never compresses secrets, auth, crypto, SQL, or security-critical code |
+| **Screenshots / demo** | Preview widget: `~/.hermes/plugins/tokenomics/preview.html` (HTML dashboard with XP, streaks, achievements). See `assets/logo.png` for branding |
+| **Tests** | 135 passing (core, Hermes plugin, CLI) · `ruff check .` clean |
 
 ### Install Command
 
@@ -374,7 +398,7 @@ Tokenomics is also published as a **DSH Plugin** for the DeepSeek Harness ecosys
 dsh plugin --profile web add tokenomics-dsh-plugin
 
 # From source (works now):
-dsh plugin --profile web add github:z99wE/tokenomics
+dsh plugin --profile web add github:z99wE/tokenomics-plugin
 ```
 
 ### Pre-submission Checklist

@@ -44,9 +44,9 @@ def description() -> str:
 
 def markdown_image() -> str:
     """Return a markdown image tag for the logo."""
-    return f"![Tokenomics]({_LOGO_PATH.name})"
+    return "![Tokenomics](tokenomics/assets/logo.png)"
 
 
 def html_image() -> str:
     """Return an HTML img tag for the logo."""
-    return f'<img src="{_LOGO_PATH.name}" alt="Tokenomics" width="1200"/>'
+    return '<img src="tokenomics/assets/logo.png" alt="Tokenomics" width="420"/>'
