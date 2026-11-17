@@ -371,113 +371,36 @@ Tokenomics is **engineered independently** as its own project. It reimplements t
 
 ---
 
-## DeepSeek Harness Plugin (DSH Plugin)
+## DeepSeek Harness (DSH Plugin)
 
-Tokenomics is officially packaged and published as a **DeepSeek Harness (DSH) Plugin** listed on the community plugin directory ([dsh-plugin.org](https://dsh-plugin.org)).
+Tokenomics is available as a community plugin for **DeepSeek Harness (DSH)**.
 
-> *Community Notice: This is an independent open-source community plugin for DeepSeek Harness (DSH) and is not affiliated with DeepSeek AI.*
+### Install
 
-### One-Line Value
-
-After installing, your AI agent's prose is compressed, code is minimized via the YAGNI ladder, and token savings are tracked and gamified — with zero hidden prompt injection and no secrets ever touched.
-
-### Category
-
-**Tools & Capabilities** *(one of the 11 official DSH categories)*
-
-### Copyable Install Command
-
-Install the published NPM package for 1-click in-app availability:
+Install via the DSH CLI (`web` profile):
 
 ```bash
 dsh plugin --profile web add @soch-tokenomics/tokenomics-dsh-plugin
 ```
 
-Or install from source:
+Or install directly from source:
 
 ```bash
 dsh plugin --profile web add github:z99wE/tokenomics-plugin
 ```
 
-### Trust Signals & Risk Disclosure
+### Registered Tools
 
-| Trust Signal | Specification |
+When mounted in DeepSeek Harness, Tokenomics registers the following tools into the DSH environment:
+
+| Tool | Description |
 |:---|:---|
-| **License** | **MIT License** — 100% open-source and free to inspect, modify, and build on |
-| **Permissions** | Zero elevated permissions. Writes solely to local user state (`~/.hermes/...`, `~/.tokenomics/...`) |
-| **External Services** | **None.** Operates 100% locally with zero network calls, zero telemetry, and zero tracking |
-| **Safety Invariant** | Strictly avoids compressing secrets, tokens, auth headers, SQL queries, or crypto primitives |
-| **Compatibility** | DeepSeek Harness `web` profile · Node.js ≥ 18 · Python ≥ 3.9 · Hermes ≥ 0.22 |
-| **Entry Point Spec** | Exports standard Cordis `apply(ctx)` plugin contract (`index.mjs` / `apply.js`) |
-| **Automated Verification** | 135 passing test cases · `ruff check .` clean |
+| `tokenomics_status` | View current token savings, streak, XP, and efficiency achievements. |
+| `tokenomics_estimate` | Calculate estimated token savings for any prompt or text. |
+| `tokenomics_review` | Run an anti-overengineering YAGNI code review on a code snippet. |
 
-### Visible Proof & Real Demo Output
+### Privacy & Trust
 
-```console
-$ tokenomics estimate "This is a really simple test."
-Original:   7 tokens
-Compressed: 5 tokens
-Saved:      2 tokens (29% reduction)
-
-Compressed preview:
-This is simple test.
-
-$ tokenomics review --code "class UserFactoryManagerServiceController: pass"
-╔═══════════════════════════════════════════════════════════════════════════╗
-║                      Ponytail Code Review                                 ║
-╠═══════════════════════════════════════════════════════════════════════════╣
-║ Issues found:                                                             ║
-║   • Possible unnecessary abstraction layer — consider simpler functions   ║
-╚═══════════════════════════════════════════════════════════════════════════╝
-```
-
-The companion HTML preview widget (`~/.hermes/plugins/tokenomics/preview.html`) renders live XP, streak tracking, level progression, and token achievements.
-
-### DSH Plugin Listing Requirements Checklist
-
-- [x] **Public Repository:** [https://github.com/z99wE/tokenomics-plugin](https://github.com/z99wE/tokenomics-plugin)
-- [x] **GitHub Topic:** `dsh-plugin` topic added to repository
-- [x] **Copyable Install Command:** Listed in README (`dsh plugin --profile web add @soch-tokenomics/tokenomics-dsh-plugin`)
-- [x] **Plugin Specification:** Exports standard `apply(ctx)` module (`apply.js` / `index.mjs`)
-- [x] **Root `package.json`:** Includes package identity, version, repository URL, and Cordis patch definition
-- [x] **NPM Package Published:** [`@soch-tokenomics/tokenomics-dsh-plugin@2.4.0`](https://www.npmjs.com/package/@soch-tokenomics/tokenomics-dsh-plugin) (Public access)
-
-### Submission Details
-
-```markdown
-[Plugin submission] z99wE/tokenomics-plugin — Token- and context-aware efficiency layer for your AI agent
-
-### Repository
-https://github.com/z99wE/tokenomics-plugin
-
-### One-line value
-After installing, your AI agent's prose is compressed, code is minimized via the YAGNI ladder, and token savings are tracked and gamified — with no hidden prompt injection and no secrets ever touched.
-
-### Category
-Tools & Capabilities
-
-### Install command
-dsh plugin --profile web add @soch-tokenomics/tokenomics-dsh-plugin
-
-(Or from source: dsh plugin --profile web add github:z99wE/tokenomics-plugin)
-
-### Compatibility
-DeepSeek Harness `web` profile; Node >= 18; Python >= 3.9; Hermes >= 0.22 (optional)
-
-### License
-MIT
-
-### Screenshots / demo
-CLI output and preview widget documented in the README (`Visible Proof & Real Demo Output` section). Preview widget: `~/.hermes/plugins/tokenomics/preview.html`.
-
-### Notes
-No network calls, no telemetry, no external services. Files are written only to local state (`~/.hermes/...`, `~/.tokenomics/...`). Never compresses secrets/auth/crypto/SQL or security-critical code. Companion CLI installed via `pip install tokenomics`. 135 tests pass; `ruff check .` clean. NPM package: https://www.npmjs.com/package/@soch-tokenomics/tokenomics-dsh-plugin
-
-### Pre-submission checklist
-- [x] Repository is public
-- [x] GitHub topic `dsh-plugin` added
-- [x] README includes the install command
-- [x] Plugin exports an `apply(ctx)` module
-- [x] Repository root includes a `package.json`
-- [x] NPM publish: https://www.npmjs.com/package/@soch-tokenomics/tokenomics-dsh-plugin
-```
+- **100% Local:** Zero network requests, zero telemetry, and zero tracking.
+- **Safe & Non-Destructive:** Strictly avoids altering secrets, tokens, credentials, and crypto/SQL code.
+- **Lightweight:** Requires no extra services beyond the companion CLI (`pip install tokenomics`).
