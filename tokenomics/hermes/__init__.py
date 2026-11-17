@@ -8,8 +8,8 @@ subagent propagation.
 
 from __future__ import annotations
 
-import sys
 import os
+import sys
 from typing import Any
 
 # Make the tokenomics package importable
@@ -18,13 +18,11 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from tokenomics.core import (
     compress_prose,
     estimate_tokens,
-    ponytail_ladder,
     review_code,
     get_preset,
-    DomainPreset,
 )
-from tokenomics.state import StateManager
 from tokenomics.preview import write_preview
+from tokenomics.state import StateManager
 
 STATE_MANAGER = StateManager()
 
@@ -128,14 +126,22 @@ def _handle_domain(args: dict[str, Any]) -> dict[str, Any]:
     if action == "never":
         sm.set_domain_rule(domain, "never_compress", True)
         return {"ok": True, "data": {"message": f"{domain} added to never-compress list"}}
-    elif action == "always":
+    if action == "always":
         sm.set_domain_rule(domain, "always_compress", True)
         return {"ok": True, "data": {"message": f"{domain} added to always-compress list"}}
-    elif action == "preset":
+    if action == "preset":
         sm.set_domain_preset(domain, preset)
         return {"ok": True, "data": {"message": f"{domain} → preset {preset}"}}
-    elif action == "list":
-        return {"ok": True, "data": sm.get_domain_rules()}
+    if action == "list":
+        rules = STATE_MANAGER.get_domain_rules()
+        return {
+            "ok": True,
+            "data": {
+                "never_compress": list(rules.never_compress),
+                "always_compress": list(rules.always_compress),
+                "force_preset": dict(rules.force_preset),
+            },
+        }
     return {"ok": False, "error": f"unknown domain action: {action}"}
 
 
@@ -153,10 +159,10 @@ def _handle_budget(args: dict[str, Any]) -> dict[str, Any]:
             return {"ok": False, "error": "limit required for set action"}
         sm.set_token_budget(limit)
         return {"ok": True, "message": f"Daily token budget set to {limit} tokens"}
-    elif action == "check":
+    if action == "check":
         budget = sm.get_token_budget()
         return {"ok": True, "data": {"budget": budget}}
-    elif action == "record":
+    if action == "record":
         tokens = args.get("tokens")
         if tokens is None:
             return {"ok": False, "error": "tokens required for record action"}
@@ -167,14 +173,20 @@ def _handle_budget(args: dict[str, Any]) -> dict[str, Any]:
 
 def _handle_project(args: dict[str, Any]) -> dict[str, Any]:
     sm = STATE_MANAGER
-    sm.set_project_type(args["type"])
-    return {"ok": True, "message": f"Project type set to: {args['type']}"}
+    project_type = args.get("type")
+    if not project_type:
+        return {"ok": False, "error": "type is required"}
+    sm.set_project_type(project_type)
+    return {"ok": True, "message": f"Project type set to: {project_type}"}
 
 
 def _handle_learn(args: dict[str, Any]) -> dict[str, Any]:
     sm = STATE_MANAGER
-    sm.set_auto_learn(args["enable"])
-    return {"ok": True, "message": f"Auto-learn {'enabled' if args['enable'] else 'disabled'}"}
+    enable = args.get("enable")
+    if enable is None:
+        return {"ok": False, "error": "enable is required"}
+    sm.set_auto_learn(enable)
+    return {"ok": True, "message": f"Auto-learn {'enabled' if enable else 'disabled'}"}
 
 
 def _run_tool(name: str, args: dict[str, Any]) -> dict[str, Any]:
@@ -208,8 +220,6 @@ def _hook_pre_llm_call(**kwargs: Any) -> dict[str, Any]:
         return {"context": context}
 
     domain = kwargs.get("domain", None)
-    preset_name = STATE_MANAGER.get_domain_preset(domain) if domain else None
-    preset = get_preset(preset_name) if preset_name else None
 
     ponytail_note = (
         "\n[TOKENOMICS / PONYTAIL] Lazy-senior-dev mode active. "
@@ -241,7 +251,7 @@ def _hook_pre_tool_call(**kwargs: Any) -> dict[str, Any]:
 
     # Check selective domain rules
     rules = STATE_MANAGER.get_domain_rules()
-    if domain in rules.get("never_compress", []):
+    if domain in list(rules.never_compress):
         return kwargs
 
     compressed_args = {}
@@ -265,7 +275,7 @@ def _hook_post_tool_call(**kwargs: Any) -> dict[str, Any]:
 
     result = kwargs.get("result", {})
     if not isinstance(result, dict) or "data" not in result or not isinstance(result["data"], dict):
-        return kwargs
+        return result
 
     data = result["data"]
     turn_original = 0

@@ -34,7 +34,6 @@ def write_preview(state: dict[str, Any], preview_path: str | None = None) -> str
     level = state.get("level", 1)
     xp = state.get("xp", 0)
     streak = state.get("current_streak", 0)
-    best_streak = state.get("best_streak", 0)
 
     achs = state.get("achievements", {})
     unlocked_count = sum(1 for a in achs.values() if a.get("unlocked"))

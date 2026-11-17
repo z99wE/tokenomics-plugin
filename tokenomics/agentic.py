@@ -10,20 +10,17 @@ Makes Tokenomics agentic-era friendly:
 
 from __future__ import annotations
 
-import json
-import os
 import re
 import time
 from dataclasses import asdict, dataclass, field
 from typing import Any
 
-from .core import (
-    ACHIEVEMENTS, Achievement, DomainRules, Gamification,
-    LearnedCompression, LearnedPattern, compress_prose, estimate_tokens,
-    get_preset, ponytail_rewrite, review_code,
-)
 from .context import compression_strategy_for, detect_context, is_security_sensitive
-from .state import StateManager
+from .core import (
+    compress_prose,
+    estimate_tokens,
+    get_preset,
+)
 
 
 @dataclass
@@ -251,13 +248,12 @@ class ClaudeCoachIntegration:
                 "advice": f"Stop using '{pattern}' compression — you keep reverting it",
                 "action": "disabled",
             }
-        else:
-            return {
-                "ok": True,
-                "pattern": pattern,
-                "advice": f"Keep using '{pattern}' compression — it works well",
-                "action": "keep",
-            }
+        return {
+            "ok": True,
+            "pattern": pattern,
+            "advice": f"Keep using '{pattern}' compression — it works well",
+            "action": "keep",
+        }
 
 
 # ---------------------------------------------------------------------------

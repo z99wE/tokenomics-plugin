@@ -6,19 +6,13 @@ import fcntl
 import json
 import os
 import time
-from dataclasses import asdict, dataclass
-from datetime import datetime, timedelta
+from dataclasses import asdict
+from datetime import datetime
 from typing import Any
 
 from .core import (
     ACHIEVEMENTS,
-    Achievement,
-    DomainPreset,
     DomainRules,
-    Gamification,
-    LearnedCompression,
-    LearnedPattern,
-    get_preset,
 )
 
 STATE_PATH = os.path.expanduser("~/.hermes/plugins/tokenomics/state.json")

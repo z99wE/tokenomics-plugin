@@ -11,8 +11,8 @@ and cross-agent memory.
 
 from __future__ import annotations
 
-import sys
 import os
+import sys
 from typing import Any
 
 # Make the tokenomics package importable
@@ -21,13 +21,11 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from tokenomics.core import (
     compress_prose,
     estimate_tokens,
-    ponytail_ladder,
     review_code,
     get_preset,
-    DomainPreset,
 )
-from tokenomics.state import StateManager
 from tokenomics.preview import write_preview
+from tokenomics.state import StateManager
 
 STATE_MANAGER = StateManager()
 
@@ -131,13 +129,13 @@ def _handle_domain(args: dict[str, Any]) -> dict[str, Any]:
     if action == "never":
         sm.set_domain_rule(domain, "never_compress", True)
         return {"ok": True, "data": {"message": f"{domain} added to never-compress list"}}
-    elif action == "always":
+    if action == "always":
         sm.set_domain_rule(domain, "always_compress", True)
         return {"ok": True, "data": {"message": f"{domain} added to always-compress list"}}
-    elif action == "preset":
+    if action == "preset":
         sm.set_domain_preset(domain, preset)
         return {"ok": True, "data": {"message": f"{domain} → preset {preset}"}}
-    elif action == "list":
+    if action == "list":
         return {"ok": True, "data": sm.get_domain_rules()}
     return {"ok": False, "error": f"unknown domain action: {action}"}
 
@@ -173,10 +171,6 @@ def _hook_pre_llm_call(**kwargs: Any) -> dict[str, Any]:
     state = STATE_MANAGER.load()
     if not state.get("enabled", False):
         return {"context": context}
-
-    domain = kwargs.get("domain", None)
-    preset_name = STATE_MANAGER.get_domain_preset(domain) if domain else None
-    preset = get_preset(preset_name) if preset_name else None
 
     ponytail_note = (
         "\n[TOKENOMICS / PONYTAIL] Lazy-senior-dev mode active. "

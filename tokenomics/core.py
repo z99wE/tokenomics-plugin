@@ -23,9 +23,6 @@ Features:
 
 from __future__ import annotations
 
-import fcntl
-import json
-import os
 import re
 import time
 from dataclasses import asdict, dataclass, field
@@ -692,6 +689,4 @@ def compress_prose(
     for i, phrase in enumerate(protected):
         text = text.replace(f"\x00PROTECT_{i}\x00", phrase)
 
-    text = _restore_code_blocks(text, blocks)
-
-    return text
+    return _restore_code_blocks(text, blocks)

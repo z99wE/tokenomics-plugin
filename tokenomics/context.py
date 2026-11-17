@@ -41,7 +41,7 @@ def detect_context(text: str) -> str:
 
     Returns one of: code, config, secrets, docs, sql, prose
     """
-    scores: dict[str, int] = {ctx: 0 for ctx in CONTEXT_PATTERNS}
+    scores: dict[str, int] = dict.fromkeys(CONTEXT_PATTERNS, 0)
     for context, patterns in CONTEXT_PATTERNS.items():
         for pattern in patterns:
             matches = len(re.findall(pattern, text, re.IGNORECASE | re.MULTILINE))

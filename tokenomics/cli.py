@@ -9,13 +9,13 @@ import argparse
 import sys
 from typing import Any
 
+from ._logo import LOGO, TAGLINE
 from .core import compress_prose, estimate_tokens, ponytail_ladder, review_code
 from .preview import write_preview
 from .state import StateManager
 
 
 def _print_logo() -> None:
-    from ._logo import LOGO, TAGLINE
     print(LOGO)
     print(TAGLINE)
     print()
@@ -47,9 +47,9 @@ def cmd_status(args: argparse.Namespace) -> int:
     print(f"║ Streak:      {status['current_streak']:>27} day(s) ║")
     print(f"║ Best streak: {status['best_streak']:>27} day(s) ║")
     print(f"║ Subagents:   {status['subagents_propagated']:>27} ║")
-    print(f"║───────────────────────────────────────║")
+    print("║───────────────────────────────────────║")
     print(f"║ Achievements:{status['achievements_unlocked']:>3}/{status['total_achievements']:<23}║")
-    print(f"║───────────────────────────────────────║")
+    print("║───────────────────────────────────────║")
     print(f"║ Original:    {status['original_chars']:>27} chars ║")
     print(f"║ Compressed:  {status['compressed_chars']:>26} chars ║")
     print(f"║ Saved:       {status['saved_chars']:>27} chars ║")
@@ -96,7 +96,7 @@ def cmd_review(args: argparse.Namespace) -> int:
     print(f"║ Original:   {result['original_tokens']:>5} tokens   ║")
     print(f"║ Compressed: {result['compressed_tokens']:>5} tokens   ║")
     print(f"║ Savings:    {result['estimated_savings']:>5} tokens   ║")
-    print(f"║───────────────────────────────────────║")
+    print("║───────────────────────────────────────║")
     print(f"║ {result['recommendation']:<43}║")
     print("╚═══════════════════════════════════════╝")
     print()
@@ -123,7 +123,7 @@ def cmd_audit(args: argparse.Namespace) -> int:
     print(f"║ Streak:      {status['current_streak']:>27} day(s) ║")
     print(f"║ Turns:       {status['turns']:>27} ║")
     print(f"║ Subagents:   {status['subagents_propagated']:>27} ║")
-    print(f"║───────────────────────────────────────║")
+    print("║───────────────────────────────────────║")
     print(f"║ Original:    {status['original_chars']:>27} chars ║")
     print(f"║ Compressed:  {status['compressed_chars']:>26} chars ║")
     print(f"║ Saved:       {saved_chars:>27} chars ║")
@@ -145,12 +145,11 @@ def cmd_ladder(args: argparse.Namespace) -> int:
 
 
 def cmd_logo(args: argparse.Namespace) -> int:
-    from ._logo import LOGO
     print(LOGO)
     return 0
 
 
-def cmd_domain(args: argparse.Namespace) -> None:
+def cmd_domain(args: argparse.Namespace) -> int:
     """Manage domain rules and presets."""
     sm = StateManager()
     if args.domain_action == "never":
@@ -164,9 +163,10 @@ def cmd_domain(args: argparse.Namespace) -> None:
         print(f"✓ {args.domain_name} → preset {args.preset_name}")
     elif args.domain_action == "list":
         rules = sm.get_domain_rules()
-        print("Never compress:", ", ".join(rules["never_compress"]) or "none")
-        print("Always compress:", ", ".join(rules["always_compress"]) or "none")
-        print("Force presets:", rules["force_preset"] or "none")
+        print("Never compress:", ", ".join(list(rules.never_compress)) or "none")
+        print("Always compress:", ", ".join(list(rules.always_compress)) or "none")
+        print("Force presets:", rules.force_preset or "none")
+    return 0
 
 
 def cmd_achievements(args: argparse.Namespace) -> int:
@@ -180,7 +180,7 @@ def cmd_achievements(args: argparse.Namespace) -> int:
     return 0
 
 
-def cmd_budget(args: argparse.Namespace) -> None:
+def cmd_budget(args: argparse.Namespace) -> int:
     """Set or check daily token budget."""
     sm = StateManager()
     if args.budget_action == "set":
@@ -192,9 +192,10 @@ def cmd_budget(args: argparse.Namespace) -> None:
             print("No daily token budget set.")
         else:
             print(f"Daily token budget: {budget} tokens")
+    return 0
 
 
-def cmd_record(args: argparse.Namespace) -> None:
+def cmd_record(args: argparse.Namespace) -> int:
     """Record tokens consumed and check budget."""
     sm = StateManager()
     result = sm.record_tokens_used(args.tokens)
@@ -203,28 +204,32 @@ def cmd_record(args: argparse.Namespace) -> None:
     print(f"Used today: {result['used_today']} tokens")
     if result["saved_today"]:
         print(f"Saved today: {result['saved_today']} tokens")
+    return 0
 
 
-def cmd_project(args: argparse.Namespace) -> None:
+def cmd_project(args: argparse.Namespace) -> int:
     """Set project type for smart defaults."""
     sm = StateManager()
     sm.set_project_type(args.type)
     print(f"✓ Project type set to: {args.type}")
     print("  Smart defaults will now suggest domain rules for this project type.")
+    return 0
 
 
-def cmd_learn(args: argparse.Namespace) -> None:
+def cmd_learn(args: argparse.Namespace) -> int:
     """Toggle auto-learn from user reverts."""
     sm = StateManager()
     sm.set_auto_learn(args.enable)
     print(f"✓ Auto-learn {'enabled' if args.enable else 'disabled'}")
+    return 0
 
 
-def cmd_defaults(args: argparse.Namespace) -> None:
+def cmd_defaults(args: argparse.Namespace) -> int:
     """Toggle smart default suggestions."""
     sm = StateManager()
     sm.set_smart_defaults(args.enable)
     print(f"✓ Smart defaults {'enabled' if args.enable else 'disabled'}")
+    return 0
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -267,10 +272,10 @@ def build_parser() -> argparse.ArgumentParser:
     p_project.add_argument("type", choices=["web", "cli", "library", "api", "none"])
 
     p_learn = subparsers.add_parser("learn", help="Toggle auto-learn from user reverts")
-    p_learn.add_argument("enable", action="store_true")
+    p_learn.add_argument("--enable", action="store_true")
 
     p_defaults = subparsers.add_parser("defaults", help="Toggle smart default suggestions")
-    p_defaults.add_argument("enable", action="store_true")
+    p_defaults.add_argument("--enable", action="store_true")
 
     return parser
 

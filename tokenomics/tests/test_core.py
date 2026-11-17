@@ -6,7 +6,6 @@ Run with:  python -m pytest tokenomics/tests/  -v
 
 from __future__ import annotations
 
-import json
 import os
 import sys
 import tempfile
@@ -16,12 +15,10 @@ import unittest
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from tokenomics.core import (
-    ACHIEVEMENTS,
     DomainPreset,
     DomainRules,
     Gamification,
     LearnedCompression,
-    LearnedPattern,
     compress_prose,
     estimate_tokens,
     get_preset,
@@ -31,7 +28,6 @@ from tokenomics.core import (
     review_code,
 )
 from tokenomics.state import StateManager
-
 
 # ---------------------------------------------------------------------------
 # Core tests
@@ -264,7 +260,7 @@ class TestReviewCode(unittest.TestCase):
 class TestGamification(unittest.TestCase):
     def test_level_calculation(self):
         g = Gamification(total_tokens_saved=25000)
-        newly = g.check_achievements()
+        g.check_achievements()
         self.assertEqual(g.level, 1 + 25000 // 10000)  # level 3
 
     def test_achievement_unlocks(self):
