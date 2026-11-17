@@ -463,7 +463,7 @@ MIT
 CLI output and preview widget documented in the README (`Demo (real output)` section). Preview widget: `~/.hermes/plugins/tokenomics/preview.html`.
 
 ### Notes
-No network calls, no telemetry, no external services. Files are written only to local state (`~/.hermes/...`, `~/.tokenomics/...`). Never compresses secrets/auth/crypto/SQL or security-critical code. 135 tests pass; `ruff check .` clean; SoloKnuckle score 93/100.
+No network calls, no telemetry, no external services. Files are written only to local state (`~/.hermes/...`, `~/.tokenomics/...`). Never compresses secrets/auth/crypto/SQL or security-critical code. For full tool functionality, install the Python companion CLI with `pip install tokenomics`; without it, the bundle mounts but its tools report the CLI as unavailable. 135 tests pass; `ruff check .` clean; SoloKnuckle score 93/100.
 
 ### Pre-submission checklist
 - [x] Repository is public
