@@ -404,3 +404,4 @@ When mounted in DeepSeek Harness, Tokenomics registers the following tools into 
 - **100% Local:** Zero network requests, zero telemetry, and zero tracking.
 - **Safe & Non-Destructive:** Strictly avoids altering secrets, tokens, credentials, and crypto/SQL code.
 - **Lightweight:** Requires no extra services beyond the companion CLI (`pip install tokenomics`).
+[![Listed on dsh-plugin.org](https://dsh-plugin.org/badges/listed.svg)](https://dsh-plugin.org/plugins/z99we/tokenomics-plugin)
